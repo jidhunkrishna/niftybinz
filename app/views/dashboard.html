@@ -1,0 +1,119 @@
+<!--<div ng-cloak="" class="gridListdemoBasicUsage">
+
+    <md-grid-list md-cols-xs="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="3" md-row-height-gt-md="1:1" md-row-height="4:2"  md-gutter="12px" md-gutter-gt-sm="8px">
+
+        <md-grid-tile class="light-blue">
+            <md-grid-tile-footer>
+                <h3>REMINDERS</h3>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+
+        <md-grid-tile class="light-blue">
+            <md-grid-tile-footer>
+                <h3>TO DO</h3>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+
+        <md-grid-tile class="light-blue">
+            <md-grid-tile-footer>
+                <h3>ORDERS</h3>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+        
+        <md-grid-tile class="color">
+            <md-grid-tile-footer>
+                <h3>#3: (1r x 1c)</h3>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+
+        <md-grid-tile class="dark-blue" md-rowspan="1" md-colspan="3" md-colspan-sm="1" md-colspan-xs="2" ng-href="#/archives">
+            <md-grid-tile-footer ng-href="#/archives">
+                <h3 ng-href="#/archives">ARCHIVES</h3>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+        
+        <md-grid-tile class="light-blue">
+            <md-grid-tile-footer>
+                <h3>COUPONS</h3>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+
+        <md-grid-tile class="light-blue">
+            <md-grid-tile-footer>
+                <h3>EXPENSE</h3>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+
+        <md-grid-tile class="light-blue">
+            <md-grid-tile-footer>
+                <h3>INCOME</h3>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+
+    </md-grid-list>
+</div>-->
+
+<div class="dashboard-page">
+    <div class="container-fluid">
+        <!--<nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/dashboard">
+                        <img alt="Brand" src="/images/logo.png">
+                    </a>
+                    <a ui-sref="home" class="btn btn-primary btn-outline btn-rounded">HOME</a>
+                    <p class="navbar-text">{{$state.current.name | uppercase}}</p>
+                </div>
+            </div>
+        </nav>-->
+        <!--<div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <div class="text-center">
+                    <h2 class="brand">NIFTYBINZ</h2>
+                    <img src="images/flat-avatar.png" class="user-avatar" /><br />
+                    <a ui-sref="login" class="btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
+                </div>
+
+                <ul class="nav nav-sidebar">
+                    <li ng-class="{active: $state.includes('home')}"><a ui-sref="home">DASHBOARD</a></li>
+                    <li><a ui-sref="main">Logout</a></li>
+                </ul>
+
+            </div>-->
+            <!--            <div class="col-sm-3 col-md-2 sidebar">
+
+                <div class="text-center">
+                    <h2 class="brand">NIFTYBINZ</h2>
+                    <img src="images/flat-avatar.png" class="user-avatar" /><br />
+                    <a ui-sref="login" class="btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
+                </div>
+
+                <ul class="nav nav-sidebar">
+                    <li ng-class="{active: $state.includes('archives')}"><a ui-sref="archives">ARCHIVES</a></li>
+                    <li ng-class="{active: $state.includes('reminders')}"><a ui-sref="reminders">REMINDERS</a></li>
+                    <li ng-class="{active: $state.includes('coupons')}"><a ui-sref="coupons">COUPONS</a></li>
+                    <li ng-class="{active: $state.includes('todo')}"><a ui-sref="todo">TO DO</a></li>
+                </ul>
+
+            </div>-->
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 header">
+                <div class="col-xs-1 col-md-2 home-button">
+                    <a ui-sref="home" class="btn btn-primary btn-outline btn-rounded" ng-hide="$state.current.name === 'home' "><span class="glyphicon glyphicon-home" aria-hidden="true"></span> HOME</a>
+                </div>
+                <div class="col-xs-8 col-md-8 text-center">
+                    <h2>{{$state.current.name | uppercase}}</h2>
+                </div>
+                <div class="col-xs-1 col-md-2 logout-button text-right">
+                    <a ui-sref="main" class="btn btn-primary btn-rounded">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3 col-md-12 col-md-offset-0 main" ui-view="archive">
+            <div class="col-sm-9 col-sm-offset-3 col-md-12 col-md-offset-0 main" ui-view>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

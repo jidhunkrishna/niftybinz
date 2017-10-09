@@ -1,0 +1,16 @@
+@import "variables.scss";
+.primary-btn{
+    color : $honey-dew;
+    background-color: $dark-blue;
+    &:hover {
+        color: $honey-dew;
+    }
+    &:active {
+        outline: none;
+        color: $honey-dew;
+    }
+    &:focus {
+        outline: none;
+        color: $honey-dew;
+    }
+}

@@ -1,0 +1,81 @@
+<div class="archives-page">
+    <!--<div class="col-md-12 header">
+        <div class="col-md-2 home-button">
+            <a ui-sref="home" class="btn btn-primary btn-outline btn-rounded">HOME</a>
+        </div>
+        <div class="col-md-8 text-center">
+            <h2>ARCHIVES</h2>
+        </div>
+    </div>-->
+
+    <div class="container">
+        <div class="input-group col-md-12">
+                    <input type="text" class="form-control input-lg" ng-model="searchArchiveText" placeholder="Search archives" />
+                    <span class="input-group-btn" ng-show="searchArchiveText.length==0">
+                        <button class="btn btn-info btn-lg" type="button">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                    <span class="input-group-btn" ng-hide="searchArchiveText.length==0" ng-click="searchArchiveText=''">
+                        <button class="btn btn-info btn-lg" type="button">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </button>
+                    </span>
+                </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-4 text-center filters">
+                <!--<span class="filter-button" ng-repeat="filter in archiveFilters">{{filter}}</span>-->
+                <div class="btn-group" role="group" aria-label="...">
+                    <div class="btn-group" role="group" ng-repeat="filter in archiveFilters">
+                        <button type="button" ng-click="archiveSelectFilter(filter)" class="btn btn-default"
+                            ng-class="{selected: filter.isSelected, disabled: filter.isDisabled}">
+                            {{filter.filterName | uppercase}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <table id="archiveTable" class="table table-bordered table-striped">
+
+                <thead>
+                    <tr>
+                        <td>
+                            <span ng-click="sortType = 'fileType' ; sortReverse = !sortReverse">
+      TYPE
+      <span ng-show="sortType == 'fileType'" class="fa fa-caret-down"></span>
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-click="sortType = 'name' ; sortReverse = !sortReverse">
+                                    <span ng-show="sortType == 'name'" class="fa fa-caret-down"></span> NAME
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-click="sortType = 'date' ; sortReverse = !sortReverse">
+                                    <span ng-show="sortType == 'date'" class="fa fa-caret-down"></span> DATE
+                            </span>
+                        </td>
+                    </tr>
+                </thead>
+
+                <!--<tbody>-->
+                    <!--<tr ng-repeat="list in archiveLists | orderBy:archiveSortType:sortReverse | filter:archiveFilterBy | filter:searchArchiveText">-->
+                        <!--<td>{{ list.fileType }}</td>-->
+                        <!--<td>{{ list.name }}</td>-->
+                        <!--<td>{{ list.date }}</td>-->
+                    <!--</tr>-->
+                <!--</tbody>-->
+
+            </table>
+            <!--<table id="archiveTable" class="display" width="100%"></table>-->
+            <!-- <md-list>
+                    <md-list-item ng-repeat="list in lists">
+                        <md-icon mdListIcon>mail</md-icon>
+                        <h3 mdLine> {{list.name}} </h3>
+                        <p mdLine> {{list.date}} </p>
+                    </md-list-item>
+                </md-list>-->
+        </div>
+    </div>
+</div>
