@@ -1,0 +1,282 @@
+@import "variables.scss";
+@import "mixins.scss";
+.dashboard-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: lighten(#A8DADC, 20%);
+    color: #666;
+    .navbar {
+        color: $honey-dew;
+        background-color: $dark-blue;
+        img {
+            width: 30px;
+        }
+        .navbar-text {
+            color: $honey-dew;
+            text-align: center;
+        }
+    }
+    .header {
+        background-color: $dark-blue;
+        height: 53px;
+        .btn-primary {
+            background-color: $light-blue;
+        }
+        .home-button,
+        .logout-button {
+            padding-top: 10px; //text-align: right;
+            color: $honey-dew;
+        }
+        .logout-button .btn-primary,
+        .home-button .btn-primary {
+            background-color: transparent;
+            color: $honey-dew;
+            border: none;
+        }
+        h2 {
+            margin-top: 10px;
+            padding-left: 50px;
+            color: $honey-dew;
+        }
+    }
+    /*
+     * Base structure
+     */
+    /*
+     * Global add-ons
+     */
+    .sub-header {
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    /*
+     * Top navigation
+     * Hide default border to remove 1px line.
+     */
+    .navbar-fixed-top {
+        border: 0;
+    }
+    /*
+     * Sidebar
+     */
+    /* Hide for mobile, show later */
+    .sidebar {
+        .user-avatar {
+            margin: 10px 0 10px 0;
+        }
+        .brand {
+            padding-top: 15px;
+        }
+        display: none;
+        color: $honey-dew;
+        h2 {
+            font-weight: 300;
+            small {
+                color: rgba(255, 255, 255, 0.7);
+            }
+        }
+    }
+    @media (min-width: 768px) {
+        .sidebar {
+            position: fixed;
+            top: 0px;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            display: block;
+            padding: 0 20px 20px 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            /* Scrollable contents if viewport is shorter than content. */
+            background-color: lighten($queen-blue, 0%); //#f5f5f5;
+            border-right: 1px solid #eee;
+            color: $honey-dew;
+        }
+    }
+    .nav > li > a:hover,
+    .nav > li > a:focus {
+        background: darken($dark-blue, 5%);
+    }
+    /* Sidebar navigation */
+    .nav-sidebar {
+        margin-right: -21px;
+        /* 20px padding + 1px border */
+        margin-bottom: 20px;
+        margin-left: -20px;
+        margin-top: 20px;
+    }
+    .nav-sidebar > li > a {
+        color: $honey-dew;
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+    .nav-sidebar > .active > a,
+    .nav-sidebar > .active > a:hover,
+    .nav-sidebar > .active > a:focus {
+        color: $honey-dew;
+        background-color: $dark-blue;
+    }
+    /*
+     * Main content
+     */
+    .main {
+        padding: 20px; //position: absolute;
+        top: 0px;
+        bottom: 0px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        .jumbotron {
+            //background: #FFF;
+            margin-top: 20px;
+        }
+    }
+    @media (min-width: 768px) {
+        .main {
+            padding-right: 40px;
+            padding-left: 40px;
+        }
+    }
+    .main .page-header {
+        margin-top: 0;
+    }
+    /*
+     * Placeholder dashboard ideas
+     */
+    .placeholders {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .placeholders h4 {
+        margin-bottom: 0;
+    }
+    .placeholder {
+        margin-bottom: 20px;
+    }
+    .placeholder img {
+        display: inline-block;
+        border-radius: 50%;
+    }
+    .bg-fade {
+        font-size: 500px;
+        color: rgba(0, 0, 0, 0.1);
+        position: absolute;
+        right: -100px;
+        top: 200px;
+    }
+    
+    table{
+        color: $dark-blue;
+    }
+    .table-bordered > thead{
+        font-weight: $font-bold;
+        background-color: $dark-blue-aplha;
+    }
+    
+    .table-bordered,.table-bordered > thead > tr > td, .table-bordered > tbody > tr > td{
+            border: 1px solid $queen-blue;
+        }
+}
+
+.home-page {
+    .icon-grid {
+        margin-top: 5%;
+        .icon-block {
+            //width: 100%;
+            //display: inline-block;
+            box-sizing: border-box; //background: rgba($honey-dew,20);
+            background-color: $dark-blue;
+            color: $honey-dew;
+            border-radius: 6px;
+            padding: 10px 5px 10px 5px;
+            @media #{$phone} {
+                padding: 5px 5px 5px 5px;
+                margin-bottom: 10px;
+            }
+            margin: 10px;
+            .title {
+                margin-top: 0px;
+                font-size: 1.3em;
+                text-align: center;
+            }
+            img {
+                //width: 20%;
+                height: 60px;
+                display:block;
+                margin:auto;
+                @media #{$phone} {
+                    height: 30px;
+                }
+            }
+            span {
+                color: $honey-dew;
+            }
+        }
+    }
+}
+
+.archives-page {
+
+    .input-group {
+        input {
+            height: 35px;
+        }
+        button {
+            height: 35px;
+            background-color: $dark-blue-aplha;
+            border-color: $dark-blue-aplha;
+            .glyphicon {
+                top: -3px;
+                color: $dark-blue;
+            }
+        }
+    }
+
+    .filters {
+        //background-color: $honey-dew;
+        padding-left: 50px;
+        @media #{$phone} {
+            padding-left: 20px;
+        }
+        .filter-button {
+            border: 1px solid $queen-blue;
+        }
+        .btn-group > .btn-group:not(:first-child):not(:last-child) > .btn,
+        .btn-group > .btn-group:last-child:not(:first-child) > .btn:first-child,
+        .btn-group > .btn-group:first-child:not(:last-child) > .btn:last-child {
+            border-radius: 6px;
+            border: 1px solid $queen-blue;
+            padding: 5px
+        }
+        .btn-group {
+            margin: 0 10px 10px 0;
+            @media #{$phone} {
+                margin: 0 5px 5px 0;
+            } //padding: 5px 5px 5px 5px;
+            button {
+                width: 125px;
+                text-align: center;
+                background-color: transparent;
+                color: $dark-blue;
+                font-size: 1em;
+            }
+            .selected {
+                background-color:$dark-blue-aplha;
+                //color: $honey-dew;
+            }
+            .disabled{
+                //background-color:#ccc;
+                color: lighten($dark-blue, 50%);
+            }
+        }
+    }
+}
+.archives-page .dataTables_filter{display: none}
+.loading_icon{
+    position: absolute;
+    top: 50%;left: 50%;
+    margin: -50px 0px 0px -50px;
+    z-index: 1
+}
