@@ -17,7 +17,7 @@
             <div class="col-lg-12 col-md-12 col-sm-4 text-center filters">
                 <!--<span class="filter-button" ng-repeat="filter in archiveFilters">{{filter}}</span>-->
                 <div class="btn-group" role="group" aria-label="...">
-                    <div class="btn-group" role="group" ng-repeat="filter in couponFilters">
+                    <div class="btn-group" role="group" ng-repeat="filter in archiveFilters">
                         <button type="button" ng-click="archiveSelectFilter(filter)" class="btn btn-default"
                                 ng-class="{selected: filter.isSelected, disabled: filter.isDisabled}">
                             {{filter.filterName | uppercase}}

@@ -150,7 +150,7 @@ angular
                 },
                 views: {
                     '@dashboard': {
-                        templateUrl: 'views/dashboard/coupons.html',
+                        templateUrl: 'views/dashboard/common.html',
                         controller: 'OrderCtrl'
                     }
                 }
@@ -166,7 +166,7 @@ angular
                 },
                 views: {
                     '@dashboard': {
-                        templateUrl: 'views/dashboard/coupons.html',
+                        templateUrl: 'views/dashboard/common.html',
                         controller: 'ExpenseCtrl'
                     }
                 }
@@ -182,7 +182,7 @@ angular
                 },
                 views: {
                     '@dashboard': {
-                        templateUrl: 'views/dashboard/coupons.html',
+                        templateUrl: 'views/dashboard/common.html',
                         controller: 'IncomeCtrl'
                     }
                 }
@@ -198,7 +198,7 @@ angular
                 },
                 views: {
                     '@dashboard': {
-                        templateUrl: 'views/dashboard/coupons.html',
+                        templateUrl: 'views/dashboard/common.html',
                         controller: 'TodoCtrl'
                     }
                 }
