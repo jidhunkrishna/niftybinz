@@ -8,7 +8,7 @@ angular.module('niftybinzApp').service('dataFetchService', function ($q, $http,$
     statusVariable.getList = function(selectCategory){
         $rootScope.icon_loading = true;
         var deferred = $q.defer();
-        var apiParams= {"useremail": "niftybinz@gmail.com", "category": selectCategory};
+        var apiParams= {"useremail": "niftybinznew@gmail.com", "category": selectCategory};
         var archiveLists=[];
         $.ajax({
             url: "http://chiteacake.com/readgooglemails",
@@ -28,8 +28,9 @@ angular.module('niftybinzApp').service('dataFetchService', function ($q, $http,$
                         archiveLists.push({
                             'fileType': value.c_domain,
                             'name': value.subject,
-                            'date': value.date,
-                            'category': value.category
+                            'date': value.emailtimestamp,
+                            'category': value.category,
+                            'subcategory':value.subcategory
                         });
                     });
                     deferred.resolve(archiveLists)
@@ -67,12 +68,9 @@ angular.module('niftybinzApp').service('dataTableService', function ($state,$tim
                     { "data": "fileType","width": "20%"},
                     { "data": "name" ,"width": "60%"},
                     { "data": "date" ,
-                        "render":function (data) {
-                            var date = new Date(data);
-                            var day = date.getDate();
-                            var month = date.toLocaleString('en-us',{month:'short'});
-                            return day +" "+ month;
-                        },
+                         "render":function (data) {
+                        return moment(data, "x").format("DD MMM ");
+                    },
                         "width": "20%"
                     },
                     {"data":'category',"visible": false}

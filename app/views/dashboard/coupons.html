@@ -1,13 +1,14 @@
 <div class="archives-page">
     <div class="container">
         <div class="input-group col-md-12">
-            <common-search ></common-search>
-                    <span class="input-group-btn" ng-show="searchArchiveText.length==0">
+            <input type="text" id="couponSearch" class="form-control input-lg"
+                   ng-model="searchText" placeholder="Search archives" />
+                    <span class="input-group-btn" ng-show="searchText.length==0">
                         <button class="btn btn-info btn-lg" type="button">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </span>
-                    <span class="input-group-btn" ng-hide="searchArchiveText.length==0" ng-click=cancelSearch()>
+                    <span class="input-group-btn" ng-hide="searchText.length==0" ng-click=cancelCouponSearch()>
                         <button class="btn btn-info btn-lg" type="button">
                             <i class="glyphicon glyphicon-remove"></i>
                         </button>
@@ -18,7 +19,7 @@
                 <!--<span class="filter-button" ng-repeat="filter in archiveFilters">{{filter}}</span>-->
                 <div class="btn-group" role="group" aria-label="...">
                     <div class="btn-group" role="group" ng-repeat="filter in couponFilters">
-                        <button type="button" ng-click="archiveSelectFilter(filter)" class="btn btn-default"
+                        <button type="button" ng-click="couponSelectFilter(filter)" class="btn btn-default"
                                 ng-class="{selected: filter.isSelected, disabled: filter.isDisabled}">
                             {{filter.filterName | uppercase}}
                         </button>
@@ -26,8 +27,28 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <common-data-table></common-data-table>
+        <!--<div class="row">-->
+            <!--<common-data-table></common-data-table>-->
+        <!--</div>-->
+        <div class="row ">
+            <div class="col-md-12 icon-grid">
+                <div class="col-md-3 icon-block" ui-sref="archives"
+                     ng-repeat="coupon in couponLists | filter:filterExpression">
+                    <a class="btn btn-block btn-md">
+                       <img ng-src="http://logo.clearbit.com/{{coupon.fileType}}" class="img-rounded"
+                            alt={{coupon.fileType}} onerror="this.src='images/image-not-available.png';">
+                    </a>
+                    <div><label>{{coupon.fileType}}</label></div>
+                </div>
+            </div>
         </div>
+        <!--<div class="row">-->
+            <!--<div class="card" style="width: 20rem;">-->
+                <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+                <!--<div class="card-body">-->
+                    <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>

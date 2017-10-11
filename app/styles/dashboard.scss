@@ -166,7 +166,7 @@
         right: -100px;
         top: 200px;
     }
-    
+
     table{
         color: $dark-blue;
     }
@@ -174,10 +174,10 @@
         font-weight: $font-bold;
         background-color: $dark-blue-aplha;
     }
-    
+
     .table-bordered,.table-bordered > thead > tr > td, .table-bordered > tbody > tr > td{
-            border: 1px solid $queen-blue;
-        }
+        border: 1px solid $queen-blue;
+    }
 }
 
 .home-page {
@@ -234,42 +234,42 @@
         }
     }
 
-    .filters {
-        //background-color: $honey-dew;
-        padding-left: 50px;
+}
+.filters {
+    //background-color: $honey-dew;
+    padding-left: 50px;
+    @media #{$phone} {
+        padding-left: 20px;
+    }
+    .filter-button {
+        border: 1px solid $queen-blue;
+    }
+    .btn-group > .btn-group:not(:first-child):not(:last-child) > .btn,
+    .btn-group > .btn-group:last-child:not(:first-child) > .btn:first-child,
+    .btn-group > .btn-group:first-child:not(:last-child) > .btn:last-child {
+        border-radius: 6px;
+        border: 1px solid $queen-blue;
+        padding: 5px
+    }
+    .btn-group {
+        margin: 0 10px 10px 0;
         @media #{$phone} {
-            padding-left: 20px;
+            margin: 0 5px 5px 0;
+        } //padding: 5px 5px 5px 5px;
+        button {
+            width: 125px;
+            text-align: center;
+            background-color: transparent;
+            color: $dark-blue;
+            font-size: 1em;
         }
-        .filter-button {
-            border: 1px solid $queen-blue;
+        .selected {
+            background-color:$dark-blue-aplha;
+            //color: $honey-dew;
         }
-        .btn-group > .btn-group:not(:first-child):not(:last-child) > .btn,
-        .btn-group > .btn-group:last-child:not(:first-child) > .btn:first-child,
-        .btn-group > .btn-group:first-child:not(:last-child) > .btn:last-child {
-            border-radius: 6px;
-            border: 1px solid $queen-blue;
-            padding: 5px
-        }
-        .btn-group {
-            margin: 0 10px 10px 0;
-            @media #{$phone} {
-                margin: 0 5px 5px 0;
-            } //padding: 5px 5px 5px 5px;
-            button {
-                width: 125px;
-                text-align: center;
-                background-color: transparent;
-                color: $dark-blue;
-                font-size: 1em;
-            }
-            .selected {
-                background-color:$dark-blue-aplha;
-                //color: $honey-dew;
-            }
-            .disabled{
-                //background-color:#ccc;
-                color: lighten($dark-blue, 50%);
-            }
+        .disabled{
+            //background-color:#ccc;
+            color: lighten($dark-blue, 50%);
         }
     }
 }

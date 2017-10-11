@@ -41,6 +41,7 @@ Thumbs.db
 .jscsrc
 .sass-cache/
 .tmp/
+.idea/
 test/
 dist/
 node_modules/

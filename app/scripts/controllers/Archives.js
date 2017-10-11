@@ -112,10 +112,7 @@ angular.module('niftybinzApp')
                 { "data": "name" ,"width": "60%"},
                 { "data": "date" ,
                     "render":function (data) {
-                        var date = new Date(data);
-                        var day = date.getDate();
-                        var month = date.toLocaleString('en-us',{month:'short'})
-                        return day +" "+ month;
+                        return moment(data, "x").format("DD MMM ");
                     },
                     "width": "20%"
                 },
@@ -146,7 +143,7 @@ angular.module('niftybinzApp')
         console.log($scope.archiveCategoriesList);
         $scope.archiveFilters.forEach(function (item) {
             $scope.archiveCategoriesList.forEach(function (cat) {
-                console.log($filter('lowercase')(cat.category));
+                // console.log($filter('lowercase')(cat.category));
                 if (item.filterName === $filter('lowercase')(cat.category)) {
                     item.isDisabled = false;
                 }

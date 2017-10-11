@@ -49,7 +49,7 @@ angular.module('niftybinzApp')
                     }
                 });
             });
-        }
+        };
 
         $scope.archiveSortType = 'date'; // set the default sort type
         $scope.sortReverse = false;
@@ -162,23 +162,24 @@ angular.module('niftybinzApp')
 
         $scope.checkCategories($scope.couponLists, $scope.couponFilters);
 
-        $scope.couponSelectFilter = function (filter) {
-            if (!filter.isDisabled) {
-                $scope.couponFilterBy = filter.filterName;
-            } else {
-                return false;
-            }
-
-            filter.isSelected = !filter.isSelected;
-
-            if (filter.isSelected) {
-                angular.forEach($scope.couponFilters, function (value, key) {
-                    if (filter.filterName !== value.filterName) {
-                        value.isSelected = false;
-                    }
-                });
-            } else {
-                $scope.couponFilterBy = '';
-            }
-        }
+        // $scope.couponSelectFilter = function (filter) {
+        //     console.log('coupon filter.......');
+        //     if (!filter.isDisabled) {
+        //         $scope.couponFilterBy = filter.filterName;
+        //     } else {
+        //         return false;
+        //     }
+        //
+        //     filter.isSelected = !filter.isSelected;
+        //
+        //     if (filter.isSelected) {
+        //         angular.forEach($scope.couponFilters, function (value, key) {
+        //             if (filter.filterName !== value.filterName) {
+        //                 value.isSelected = false;
+        //             }
+        //         });
+        //     } else {
+        //         $scope.couponFilterBy = '';
+        //     }
+        // }
     });
