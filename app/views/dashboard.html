@@ -4,7 +4,8 @@
         <div class="row">
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 header">
                 <div class="col-xs-1 col-md-2 home-button">
-                    <a ui-sref="home" class="btn btn-primary btn-outline btn-rounded" ng-hide="$state.current.name === 'home' "><span class="glyphicon glyphicon-home" aria-hidden="true"></span> HOME</a>
+                    <a ui-sref="home" class="btn btn-primary btn-outline btn-rounded" ng-hide="$state.current.name === 'home' || $state.current.name === 'coupons details' "><span class="glyphicon glyphicon-home" aria-hidden="true"></span> HOME</a>
+                    <a ui-sref="coupons" class="btn btn-primary btn-outline btn-rounded" ng-show="$state.current.name === 'coupons details' "><i class="glyphicon glyphicon-chevron-left" aria-hidden="true"></i></a>
                 </div>
                 <div class="col-xs-8 col-md-8 text-center">
                     <h2>{{$state.current.name | uppercase}}</h2>

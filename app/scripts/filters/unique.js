@@ -48,3 +48,26 @@ angular.module('niftybinzApp')
             return items;
         };
     });
+angular.module('niftybinzApp')
+    .filter('unique_multiple', function () {
+  return function(collection, properties) {
+    var trace = [];
+    angular.forEach(collection, function(item) {
+      for (var i = 0; i < trace.length; i++) {
+         if (equalsPartial(item, trace[i], properties))
+           return;
+      }
+      trace.push(item);
+    });
+    return trace;
+  };
+
+    function equalsPartial(item,traceItem,properties){
+        for (var j = 0; j < properties.length; j++) {
+          if (item[properties[j]] !== traceItem[properties[j]])
+            return false;
+        }
+      return true;
+    }
+});
+

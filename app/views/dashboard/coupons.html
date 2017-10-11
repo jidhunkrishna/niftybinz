@@ -2,7 +2,7 @@
     <div class="container">
         <div class="input-group col-md-12">
             <input type="text" id="couponSearch" class="form-control input-lg"
-                   ng-model="searchText" placeholder="Search archives" />
+                   ng-model="searchText" placeholder="Search coupons" />
                     <span class="input-group-btn" ng-show="searchText.length==0">
                         <button class="btn btn-info btn-lg" type="button">
                             <i class="glyphicon glyphicon-search"></i>
@@ -27,28 +27,18 @@
                 </div>
             </div>
         </div>
-        <!--<div class="row">-->
-            <!--<common-data-table></common-data-table>-->
-        <!--</div>-->
-        <div class="row ">
-            <div class="col-md-12 icon-grid">
-                <div class="col-md-3 icon-block" ui-sref="archives"
-                     ng-repeat="coupon in couponLists | filter:filterExpression">
-                    <a class="btn btn-block btn-md">
-                       <img ng-src="http://logo.clearbit.com/{{coupon.fileType}}" class="img-rounded"
-                            alt={{coupon.fileType}} onerror="this.src='images/image-not-available.png';">
-                    </a>
-                    <div><label>{{coupon.fileType}}</label></div>
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="col-md-3 " ng-repeat="coupon in all_couponsList | filter:filterExpression ">
+                    <div class="polaroid btn btn-block" ui-sref="coupons details({Coupon: coupon})">
+                        <img ng-src="http://logo.clearbit.com/{{coupon.fileType}}" style="width: 100%"
+                             alt={{coupon.fileType}} onerror="this.src='images/image-not-available.png';">
+                        <div style="text-align: center; padding: 9px 8px;word-wrap: break-word">
+                            <p class="card-text" style="font-family: fantasy;font-weight: 600;">{{coupon.fileType}}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!--<div class="row">-->
-            <!--<div class="card" style="width: 20rem;">-->
-                <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-                <!--<div class="card-body">-->
-                    <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
     </div>
 </div>

@@ -4,8 +4,9 @@
 angular.module('niftybinzApp')
     .controller('CouponCtrl', function ($scope, $state,couponsLists, dataTableService, $timeout,$filter) {
 
-        console.log('coupons controller.................',couponsLists);
         $scope.couponLists = couponsLists;
+        $scope.all_couponsList = $filter('unique')($scope.couponLists, 'fileType');
+        $scope.subcategory_couponsList= $filter('unique_multiple')($scope.couponLists, ['fileType','subcategory']);
         var state = $state.current.name;
         $scope.couponFilters = [
             {
@@ -65,7 +66,6 @@ angular.module('niftybinzApp')
 
         //Enabling filter buttons if the category is present in the coupon list
         $scope.couponCategoriesList = $filter('unique')($scope.couponLists, 'subcategory');
-        console.log($scope.archiveCategoriesList);
         $scope.couponFilters.forEach(function (item) {
             $scope.couponCategoriesList.forEach(function (cat) {
                 if (item.filterCategory == cat.subcategory) {
@@ -82,10 +82,9 @@ angular.module('niftybinzApp')
             }
             else
                 {
-                    console.log('empty...........',$(this).val());
-
-                $scope.filterExpression='';
-                $scope.$digest()
+                //     console.log('empty...........',$(this).val());
+                // $scope.filterExpression='';
+                // $scope.$digest()
                 }
 
         });
@@ -96,13 +95,18 @@ angular.module('niftybinzApp')
         };
 
         $scope.couponSelectFilter = function (filter) {
+
             console.log('coupon filter.......',filter);
             if (!filter.isDisabled) {
                 if(filter.filterName=='all'){
+                    $scope.all_couponsList = $filter('unique')($scope.couponLists, 'fileType');
                     $scope.filterExpression='';
                 }
-                else
+                else{
+                    $scope.all_couponsList = $filter('unique_multiple')($scope.couponLists, ['fileType','subcategory']);
                     $scope.filterExpression ={subcategory:filter.filterCategory};
+                }
+
             } else {
                 return false;
             }
@@ -119,6 +123,6 @@ angular.module('niftybinzApp')
             // else {
             //     $scope.couponFilterBy = '';
             // }
-        }
+        };
 
     });

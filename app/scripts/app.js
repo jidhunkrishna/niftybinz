@@ -139,6 +139,16 @@ angular
                     }
                 }
             })
+            .state('coupons details', {
+                url: '/details/{Coupon:json}',
+                parent: 'coupons',
+                views: {
+                    '@dashboard': {
+                        templateUrl: 'views/dashboard/coupon_detail.html',
+                        controller: 'CouponDetailCtrl'
+                    }
+                }
+            })
             .state('orders', {
                 url: '/orders',
                 parent: 'dashboard',
