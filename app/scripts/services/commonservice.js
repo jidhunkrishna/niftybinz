@@ -8,7 +8,7 @@ angular.module('niftybinzApp').service('dataFetchService', function ($q, $http,$
     statusVariable.getList = function(selectCategory){
         $rootScope.icon_loading = true;
         var deferred = $q.defer();
-        var apiParams= {"useremail": "shanavaswn@gmail.com", "category": selectCategory};
+        var apiParams= {"useremail": "niftybinznew@gmail.com", "category": selectCategory};
         var archiveLists=[];
         $.ajax({
             url: "http://chiteacake.com/readgooglemails",

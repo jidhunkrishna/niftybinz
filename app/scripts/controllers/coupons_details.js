@@ -9,8 +9,10 @@ angular.module('niftybinzApp')
         console.log($stateParams.Coupon);
         $scope.selected_coupon=$stateParams.Coupon;
         var state = $state.current.name;
+        // $scope.selected_couponList=$filter('filter')(couponsLists,
+        //     {'fileType':$scope.selected_coupon.fileType,'subcategory':$scope.selected_coupon.subcategory});
         $scope.selected_couponList=$filter('filter')(couponsLists,
-            {'fileType':$scope.selected_coupon.fileType,'subcategory':$scope.selected_coupon.subcategory});
+            {'fileType':$scope.selected_coupon.fileType});
 
         $scope.coupon_details_table= $('#couponDetailsTable').DataTable( {
             data: $scope.selected_couponList,
