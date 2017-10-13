@@ -3,21 +3,23 @@
 
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>NiftBinz</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="bower_components/datatables.net-dt/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:light,regular,bold" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!--<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">-->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
 </head>
 
 <body ng-app="niftybinzApp">
@@ -62,9 +64,11 @@
                 scope: 'https://www.googleapis.com/auth/gmail.readonly'
             });
         });
+
+
         window.fbAsyncInit = function() {
             FB.init({
-                appId: '1480973625273555',
+                appId: '119531635461666',
                 cookie: true,
                 xfbml: true,
                 version: 'v2.10',
@@ -73,17 +77,17 @@
             FB.AppEvents.logPageView();
             FB.getLoginStatus(function(response) {
                 if (response.status === 'connected') {
-                    console.log("FB connected");
+                    console.log("Logged into app");
                 } else if (response.status === 'not_authorized') {
-                    console.log("FB not authorized");
+                    console.log("Logged into FB, but not app ");
                 } else {
-
+                    console.log("Not logged into Facebook and can't tell if they are logged into app or not");
                 }
             })
         };
 
 
-
+        // Load the facebook javascript SDK asynchronously
         (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {
@@ -94,6 +98,7 @@
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+
     }
 </script>
 
@@ -113,6 +118,7 @@
 <script src="bower_components/angular-material/angular-material.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/datatables.net/js/jquery.dataTables.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -134,15 +140,15 @@
 <script src="scripts/directives/commonDirective.js"></script>
 <script src="scripts/filters/unique.js"></script>
 <!-- endbuild -->
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<!--<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>-->
 
 
 
 <!-- Add your site or application content here -->
-<div class="header">
-    <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
+<!--<div class="header">-->
+    <!--<div class="navbar navbar-default" role="navigation">-->
+        <!--<div class="container">-->
+            <!--<div class="navbar-header">-->
 
                 <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">-->
                     <!--<span class="sr-only">Toggle navigation</span>-->
@@ -151,8 +157,8 @@
                     <!--<span class="icon-bar"></span>-->
                 <!--</button>-->
 
-                <a class="navbar-brand" href="#">NIFTYBINZ</a>
-            </div>
+                <!--<a class="navbar-brand" href="#">NIFTYBINZ</a>-->
+            <!--</div>-->
 
             <!--<div class="collapse navbar-collapse" id="js-navbar-collapse">-->
 
@@ -162,20 +168,20 @@
                     <!--<li><a ui-sref="about">Download</a></li>-->
                 <!--</ul>-->
             <!--</div>-->
-        </div>
-    </div>
-</div>
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
 
 
-<div  class="container-fluid">
+<div >
     <div ui-view></div>
 </div>
 
-<div class="footer">
+<!--<div class="footer">-->
     <!--<div class="container">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
     </div>-->
-</div>
+<!--</div>-->
 </body>
 
 </html>

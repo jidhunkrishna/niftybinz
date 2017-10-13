@@ -18,6 +18,19 @@ angular.module('niftybinzApp')
 
         $scope.searchArchiveText = "";
 
+        $scope.Logout=function(){
+            console.log('logout.....function...');
+            FB.getLoginStatus(function(response) {
+               console.log('status',response)
+            });
+            FB.logout(function(response) {
+                // window.location.reload();
+                // FB.Auth.setAuthResponse(null, 'unknown');
+                console.log('logging out from fb......and app....');
+                console.log(response);
+            })
+        };
+
         // console.log($scope.$state);
 
         //$scope.archiveFilters=['tax','expense','medical','coupons','insurance','car','work','membership','house','kids','others','all'];

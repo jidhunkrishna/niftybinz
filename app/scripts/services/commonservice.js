@@ -51,7 +51,6 @@ angular.module('niftybinzApp').service('dataFetchService', function ($q, $http,$
         });
         return deferred.promise;
     };
-    console.log('qqqqqqqqqqqqq',statusVariable);
     return statusVariable;
 });
 

@@ -20,7 +20,7 @@ angular.module('niftybinzApp')
         $scope.onLoginCheck = function () {
             $scope.invalidData = false;
             $scope.dataLoading = true;
-            var apiParams= {"username":$scope.user.name, "password": $scope.user.password}
+            var apiParams= {"username":$scope.user.name, "password": $scope.user.password};
             $.ajax({
                 // url: "http://192.168.137.57:3000/niftybinzlogin",
                 url: "http://chiteacake.com/niftybinzlogin",
@@ -114,7 +114,7 @@ angular.module('niftybinzApp')
 
         $scope.onGoogleLogin = function (){
             auth2.grantOfflineAccess().then(signInCallback);
-        }
+        };
 
         $scope.onGoogleLogin1 = function () {
             var params = {
@@ -142,10 +142,13 @@ angular.module('niftybinzApp')
                 'scope': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/plus.profile.emails.read'
             };
             gapi.auth.signIn(params);
-        }
+        };
 
         $scope.onFaceBookLogin = function(){
+            console.log('fblog......');
             FB.login(function(response){
+                console.log('response......',response);
+                console.log(response.authResponse);
                 if(response.authResponse){
                     FB.api('/me', 'GET', {fields: 'email, first_name, name, id, picture '},function(response){
                         $scope.$apply(function () {
@@ -154,39 +157,25 @@ angular.module('niftybinzApp')
                             $scope.facebook.Picture = response.picture.data.url;
                             $scope.showLinkEmail = true;
                         });
+                        console.log($scope.showLinkEmai);
                         console.log($scope.facebook);
-                        setTimeout(function () {
-                            //  loginService.facebookLogin($scope.dummy).success(function (data) {
-                            //    console.log(data);
-                            //  });
-                            $.ajax({
-                                url: "/addfbuser",
-                                type: "POST",
-                                headers: {
-                                    'X-Requested-With': 'XMLHttpRequest'
-                                },
-                                contentType: "application/json;charset=utf-8",
-                                dataType: "json",
-                                processData: false,
-                                data: JSON.stringify($scope.facebook),
-                                success: function (response) {
-                                    if (response.STATUS == 'SUCCESS') {
-                                        //alert(response.MESSAGE);
-                                        console.log(response);
-                                    }
+                            console.log(loginService.facebookLogin($scope.facebook));
+                            loginService.facebookLogin($scope.facebook).then(function (response) {
+                                console.log('niftydata......',response.data);
+                                if(response.data.STATUS=='EXISTS'||response.data.STATUS == 'SUCCESS'){
+                                    $state.go('dashboard');
+                                }
+                                else{
+                                    console.log(data.MESSAGE);
                                 }
                             });
-                        }, 1000);
                     });
                 }
-                else{
-                    //error
-                }
-            }, {
+            },{
                 scope: 'email',
                 return_scope: true
             });
-        }
+        };
 
         $scope.showSignIn = true;
         $scope.showSignUp = false;
