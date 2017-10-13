@@ -157,7 +157,7 @@ angular.module('niftybinzApp')
                             $scope.facebook.Picture = response.picture.data.url;
                             $scope.showLinkEmail = true;
                         });
-                        console.log($scope.showLinkEmai);
+                        console.log(response.email);
                         console.log($scope.facebook);
                             console.log(loginService.facebookLogin($scope.facebook));
                             loginService.facebookLogin($scope.facebook).then(function (response) {
