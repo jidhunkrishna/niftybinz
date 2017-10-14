@@ -52,16 +52,19 @@
         s.parentNode.insertBefore(p, s);
     })();
 </script>
-
+<!-- googlesign-->
 <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+
 <script>
     function start() {
+
         gapi.load('auth2', function () {
             auth2 = gapi.auth2.init({
                 //local
                 client_id: '72100849966-nefq8o1hbcqr6mq35rji61gn3tvjb2ts.apps.googleusercontent.com',
                 //web
                 //client_id: '72100849966-fqvemu8iu92a6rkmu8u8cs4h7ni8jc60.apps.googleusercontent.com',
+                //Read all resources and their metadata—no write operations
                 scope: 'https://www.googleapis.com/auth/gmail.readonly'
             });
         });
@@ -141,7 +144,7 @@
 <script src="scripts/directives/commonDirective.js"></script>
 <script src="scripts/filters/unique.js"></script>
 <!-- endbuild -->
-<!--<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>-->
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
 
 

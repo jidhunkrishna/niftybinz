@@ -5,14 +5,20 @@
 angular.module('niftybinzApp')
     .controller('CouponDetailCtrl', function ($scope, $state,couponsLists, dataTableService, $timeout,$filter,$stateParams) {
         console.log('detail....................');
-        console.log(couponsLists);
-        console.log($stateParams.Coupon);
-        $scope.selected_coupon=$stateParams.Coupon;
         var state = $state.current.name;
-        // $scope.selected_couponList=$filter('filter')(couponsLists,
-        //     {'fileType':$scope.selected_coupon.fileType,'subcategory':$scope.selected_coupon.subcategory});
-        $scope.selected_couponList=$filter('filter')(couponsLists,
-            {'fileType':$scope.selected_coupon.fileType});
+        var selected_coupon_details = $stateParams.param;
+        $scope.selected_coupon=$filter('filter')(couponsLists, {'id':selected_coupon_details.Coupon});
+        // console.log(selected_coupon_details);
+        // console.log('select',$scope.selected_coupon[0].fileType);
+
+        if (selected_coupon_details.flag){
+            $scope.selected_couponList=$filter('filter')(couponsLists,
+            {'fileType':$scope.selected_coupon[0].fileType});
+        }
+        else{
+            $scope.selected_couponList=$filter('filter')(couponsLists,
+            {'fileType':$scope.selected_coupon[0].fileType,'subcategory':$scope.selected_coupon[0].subcategory});
+        }
 
         $scope.coupon_details_table= $('#couponDetailsTable').DataTable( {
             data: $scope.selected_couponList,
@@ -21,7 +27,7 @@ angular.module('niftybinzApp')
                 { "data": "name" ,"width": "60%"},
                 { "data": "display_date" ,
                     "render":function (data) {
-                        console.log(data);
+                        // console.log(data);
                         if (data!='NULL'){
                             return moment(data).format("DD MM");
                         }

@@ -2,16 +2,17 @@
  * Created by tvpc00016 on 6/10/17.
  */
 
-angular.module('niftybinzApp').service('dataFetchService', function ($q, $http,$rootScope){
+angular.module('niftybinzApp').service('dataFetchService', function ($q, $http,$rootScope,$window){
     var statusVariable = this;
 
     statusVariable.getList = function(selectCategory){
         $rootScope.icon_loading = true;
         var deferred = $q.defer();
-        var apiParams= {"useremail": "niftybinznew@gmail.com", "category": selectCategory};
+        var niftyUser = $window.localStorage.getItem('niftyUserName');
+        var apiParams= {"niftyusername":niftyUser , "category": selectCategory};
         var archiveLists=[];
         $.ajax({
-            url: "http://chiteacake.com/readgooglemails",
+            url: "http://chiteacake.com/readmails",
             type: "POST",
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'
@@ -26,6 +27,7 @@ angular.module('niftybinzApp').service('dataFetchService', function ($q, $http,$
                     // console.log(totalList);
                     angular.forEach(totalList,function(value,index){
                         archiveLists.push({
+                            'id':value.messageid,
                             'fileType': value.c_domain,
                             'name': value.subject,
                             'date': value.emailtimestamp,
@@ -88,3 +90,29 @@ angular.module('niftybinzApp').service('dataTableService', function ($state,$tim
     };
     return dataTable;
 });
+
+angular.module('niftybinzApp').service('postDataService',['$http','$q',function($http,$q) {
+        var postDataService = this;
+        var deferred = $q.defer();
+
+        postDataService.postData = function (requestURL,dataParam) {
+            var data = JSON.stringify(dataParam);
+            var config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            $http.post(requestURL,data,config)
+                .then(function (response, status, headers, config) {
+                    deferred.resolve(response);
+                })
+                .catch(function (error, status, headers, config) {
+                    console.log(error);
+                    console.log(status);
+                    deferred.reject(error);
+                });
+            return deferred.promise;
+        };
+        return postDataService;
+
+}]);

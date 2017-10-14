@@ -5,9 +5,12 @@ angular.module('niftybinzApp')
     .controller('CouponCtrl', function ($scope, $state,couponsLists, dataTableService, $timeout,$filter) {
 
         $scope.couponLists = couponsLists;
-        $scope.all_couponsList = $filter('unique')($scope.couponLists, 'fileType');
+        console.log($scope.couponLists);
+        $scope.unique_coupons = $filter('unique')($scope.couponLists, 'fileType');
+        $scope.all_couponsList = $scope.unique_coupons;
         $scope.subcategory_couponsList= $filter('unique_multiple')($scope.couponLists, ['fileType','subcategory']);
         var state = $state.current.name;
+        $scope.category_all=true;
         $scope.couponFilters = [
             {
                 'filterName': 'fashion',
@@ -56,13 +59,6 @@ angular.module('niftybinzApp')
                 'isSelected': true
             }
         ];
-        // $timeout(function () {
-        //     $scope.coupons_table = dataTableService.createDataTable($scope.couponLists);
-        //     $('#'+state+'Search').keyup(function(){
-        //         console.log('keyuppp....');
-        //         $scope.coupons_table.search($(this).val()).draw();
-        //     });
-        // });
 
         //Enabling filter buttons if the category is present in the coupon list
         $scope.couponCategoriesList = $filter('unique')($scope.couponLists, 'subcategory');
@@ -74,23 +70,8 @@ angular.module('niftybinzApp')
             });
         });
 
-        $('#couponSearch').keyup(function(){
-            console.log('common search...............');
-            if($(this).val()){
-                $scope.filterExpression={fileType:$(this).val()};
-                console.log('valueee......',$(this).val())
-            }
-            else
-                {
-                //     console.log('empty...........',$(this).val());
-                // $scope.filterExpression='';
-                // $scope.$digest()
-                }
-
-        });
-
         $scope.cancelCouponSearch = function () {
-            $scope.filterExpression='';
+            $scope.searchText='';
             $('#couponSearch').val('');
         };
 
@@ -99,30 +80,30 @@ angular.module('niftybinzApp')
             console.log('coupon filter.......',filter);
             if (!filter.isDisabled) {
                 if(filter.filterName=='all'){
-                    $scope.all_couponsList = $filter('unique')($scope.couponLists, 'fileType');
-                    $scope.filterExpression='';
+                    $scope.all_couponsList = $scope.unique_coupons;
+                    $scope.category_all=true;
                 }
                 else{
-                    $scope.all_couponsList = $filter('unique_multiple')($scope.couponLists, ['fileType','subcategory']);
-                    $scope.filterExpression ={subcategory:filter.filterCategory};
+                    $scope.category_all=false;
+                    $scope.all_couponsList = $filter('filter')($scope.subcategory_couponsList, {subcategory:filter.filterCategory});
+                    console.log('length..',$scope.all_couponsList.length);
+                }
+
+                if(!filter.isSelected){
+                    filter.isSelected = !filter.isSelected;
+                }
+
+                if (filter.isSelected) {
+                    angular.forEach($scope.couponFilters, function (value, key) {
+                        if (filter.filterName !== value.filterName) {
+                            value.isSelected = false;
+                        }
+                    });
                 }
 
             } else {
                 return false;
             }
-
-            filter.isSelected = !filter.isSelected;
-
-            if (filter.isSelected) {
-                angular.forEach($scope.couponFilters, function (value, key) {
-                    if (filter.filterName !== value.filterName) {
-                        value.isSelected = false;
-                    }
-                });
-            }
-            // else {
-            //     $scope.couponFilterBy = '';
-            // }
         };
 
     });

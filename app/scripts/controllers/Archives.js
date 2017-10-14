@@ -125,6 +125,7 @@ angular.module('niftybinzApp')
             // "searching":false
         } );
 
+
         //  Archive table common search
         $('#archiveSearch').keyup(function(){
             console.log(archive_table);
@@ -160,7 +161,10 @@ angular.module('niftybinzApp')
                 }
                 else
                     archive_table.columns(3).search(filter.filterName).draw();
+
+                if(!filter.isSelected){
                 filter.isSelected = !filter.isSelected;
+                    }
                 if (filter.isSelected) {
                     angular.forEach($scope.archiveFilters, function (value, key) {
                         if (filter.filterName !== value.filterName) {

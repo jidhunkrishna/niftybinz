@@ -140,7 +140,7 @@ angular
                 }
             })
             .state('coupons details', {
-                url: '/details/{Coupon:json}',
+                url: '/details/{param:json}',
                 parent: 'coupons',
                 views: {
                     '@dashboard': {
@@ -202,7 +202,7 @@ angular
                 parent: 'dashboard',
                 resolve:{
                     todoLists:function(dataFetchService){
-                        var category="";
+                        var category="Todo";
                         return  dataFetchService.getList(category);
                     }
                 },
@@ -210,6 +210,22 @@ angular
                     '@dashboard': {
                         templateUrl: 'views/dashboard/common.html',
                         controller: 'TodoCtrl'
+                    }
+                }
+            })
+            .state('reminders', {
+                url: '/reminders',
+                parent: 'dashboard',
+                resolve:{
+                        reminderLists:function(dataFetchService){
+                        var category="Reminders";
+                        return  dataFetchService.getList(category);
+                    }
+                },
+                views: {
+                    '@dashboard': {
+                        templateUrl: 'views/dashboard/common.html',
+                        controller: 'ReminderCtrl'
                     }
                 }
             })

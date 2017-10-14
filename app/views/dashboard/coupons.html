@@ -29,8 +29,12 @@
         </div>
         <div class="row">
             <div class="col-md-12 ">
-                <div class="col-md-3 " ng-repeat="coupon in all_couponsList | filter:filterExpression ">
-                    <div class="polaroid btn btn-block" ui-sref="coupons details({Coupon: coupon})">
+                 <div ng-show="!all_couponsList.length">
+                        <img ng-src="images/no_coupon.jpg" alt="Coupons Not Available!!!"
+                             style="margin-left: 20%;width: 60%;height: auto;margin: 5% 20%;">
+                 </div>
+                <div class="col-md-3 " ng-repeat="coupon in all_couponsList | filter:{fileType:searchText}">
+                    <div class="polaroid btn btn-block" ui-sref="coupons details({param:{Coupon: coupon.id,flag:category_all}})">
                         <img ng-src="http://logo.clearbit.com/{{coupon.fileType}}" style="width: 100%"
                              alt={{coupon.fileType}} onerror="this.src='images/image-not-available.png';">
                         <div style="text-align: center; padding: 9px 8px;word-wrap: break-word">

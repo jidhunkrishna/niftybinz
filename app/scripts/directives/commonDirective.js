@@ -38,3 +38,23 @@ angular.module('niftybinzApp').directive('commonDataTable',function ($timeout,$s
         }
     }
 });
+
+angular.module('niftybinzApp').directive('commonFilter',function ($timeout,$state) {
+    return{
+        scope: {
+        },
+        template:'<div class="col-lg-12 col-md-12 col-sm-4 text-center filters">' +
+        '<div class="btn-group" role="group" aria-label="...">' +
+        '<div class="btn-group" role="group" ng-repeat="filter in archiveFilters">' +
+        '<button type="button" ng-click="archiveSelectFilter(filter)" class="btn btn-default"' +
+        'ng-class="{selected: filter.isSelected, disabled: filter.isDisabled}">' +
+        '{{filter.filterName | uppercase}}</button></div></div></div>',
+        link:function link(scope, element, attrs,state) {
+            console.log($state.current.name);
+            state = $state.current.name;
+            var el = element.find('#dataTable');
+            el.removeAttr('id');
+            el.attr('id', state+'Table');
+        }
+    }
+})

@@ -9,10 +9,10 @@
  */
 angular.module('niftybinzApp')
     .controller('DashboardCtrl', function ($scope, $filter, $location, $state,$rootScope) {
-        $scope.goTo = function () {
-            console.log("goto");
-            $location.path('#/archives');
-        };
+        // $scope.goTo = function () {
+        //     console.log("goto");
+        //     $location.path('#/archives');
+        // };
         $scope.$state = $state;
         $rootScope.icon_loading = false;
 
@@ -24,11 +24,10 @@ angular.module('niftybinzApp')
                console.log('status',response)
             });
             FB.logout(function(response) {
-                // window.location.reload();
-                // FB.Auth.setAuthResponse(null, 'unknown');
                 console.log('logging out from fb......and app....');
                 console.log(response);
-            })
+            });
+            auth2.signOut().then(function () {});
         };
 
         // console.log($scope.$state);
