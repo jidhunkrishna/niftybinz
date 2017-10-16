@@ -13,6 +13,7 @@ angular.module('niftybinzApp')
         //     console.log("goto");
         //     $location.path('#/archives');
         // };
+        $scope.state=$state.current.name;
         $scope.$state = $state;
         $rootScope.icon_loading = false;
 

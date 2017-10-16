@@ -108,7 +108,13 @@ angular.module('niftybinzApp')
         var archive_table= $('#archiveTable').DataTable( {
             data: $scope.archiveLists,
             columns: [
-                { "data": "fileType","width": "20%"},
+                { "data": "fileType","width": "20%",
+                    "orderable":false,
+                    "render":function (data) {
+                        var url ='http://logo.clearbit.com/'+data
+                        return '<img src='+url +' style="width: 30%; height:30% ;object-fit: contain" alt ='+data+'>'
+                    }
+                },
                 { "data": "name" ,"width": "60%"},
                 { "data": "date" ,
                     "render":function (data) {
@@ -138,7 +144,7 @@ angular.module('niftybinzApp')
             $scope.searchArchiveText = "";
             archive_table.search($scope.searchArchiveText).draw();
         };
-        
+
         //Enabling filter buttons if the category is present in the archive list
         $scope.archiveCategoriesList = $filter('unique')($scope.archiveLists, 'category');
         console.log($scope.archiveCategoriesList);
@@ -150,7 +156,7 @@ angular.module('niftybinzApp')
                 }
             });
         });
-        
+
         // Archive table category wise botton type filters 
         $scope.archiveSelectFilter=function (filter) {
             console.log('filtering................',filter);
@@ -163,8 +169,8 @@ angular.module('niftybinzApp')
                     archive_table.columns(3).search(filter.filterName).draw();
 
                 if(!filter.isSelected){
-                filter.isSelected = !filter.isSelected;
-                    }
+                    filter.isSelected = !filter.isSelected;
+                }
                 if (filter.isSelected) {
                     angular.forEach($scope.archiveFilters, function (value, key) {
                         if (filter.filterName !== value.filterName) {

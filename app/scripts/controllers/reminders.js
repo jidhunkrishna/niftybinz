@@ -6,8 +6,8 @@ angular.module('niftybinzApp')
 
         console.log('reminder controller.................',reminderLists);
         $scope.reminderLists = reminderLists;
-        var state = $state.current.name;
-        $scope.reminderFilters = [
+        console.log($scope.state);
+        $scope.FiltersList = [
             {
                 'filterName': 'APPOINTMENTS',
                 // 'filterCategory':'Fashion',
@@ -31,9 +31,32 @@ angular.module('niftybinzApp')
             }
         ];
 
+        $scope.SelectFilter=function (filter) {
+            console.log('filtering................',filter);
+            if (!filter.isDisabled){
+                if (filter.filterName == 'all'){
+                    console.log('alll......');
+                    archive_table.columns(3).search('').draw();
+                }
+                else
+                    archive_table.columns(3).search(filter.filterName).draw();
+
+                if(!filter.isSelected){
+                filter.isSelected = !filter.isSelected;
+                    }
+                if (filter.isSelected) {
+                    angular.forEach($scope.archiveFilters, function (value, key) {
+                        if (filter.filterName !== value.filterName) {
+                            value.isSelected = false;
+                        }
+                    });
+                }
+            }
+        };
+
         $timeout(function () {
             $scope.reminder_table = dataTableService.createDataTable($scope.reminderLists);
-            $('#'+state+'Search').keyup(function(){
+            $('#'+$scope.state+'Search').keyup(function(){
                 console.log('keyuppp....');
                 $scope.reminder_table.search($(this).val()).draw();
             });

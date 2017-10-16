@@ -5,11 +5,18 @@
 angular.module('niftybinzApp').directive('commonSearch',function ($timeout,$state) {
     return{
         scope: {
-            // 'searchlist': '=',
-            // 'searchdata':'=',
-            // 'placeholder':'@'
+            'searchText': '='
         },
-        template:'<input type="text" id="common_search" class="form-control input-lg" ng-model="searchArchiveText" />',
+        template:'<div class="input-group col-md-12"><input type="text" id="common_search" ' +
+        'class="form-control input-lg" ng-model="searchText" />' +
+        '<span class="input-group-btn" ng-show="searchText.length==0">' +
+        '<button class="btn btn-info btn-lg" type="button">' +
+        '<i class="glyphicon glyphicon-search"></i>' +
+        '</button></span>' +
+        '<span class="input-group-btn" ng-hide="searchText.length==0" ng-click=cancelCouponSearch()> ' +
+        '<button class="btn btn-info btn-lg" type="button">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button></span></div>',
         link:function link(scope, element, attrs,state) {
             console.log($state.current.name);
             state = $state.current.name;
@@ -27,7 +34,7 @@ angular.module('niftybinzApp').directive('commonDataTable',function ($timeout,$s
         },
         template:'<table id="dataTable" class="table table-bordered table-striped ">' +
         '<thead>' +
-        '<tr><td>Type</td><td>Name</td><td>Date</td><td>Category</td>' +
+        '<tr><td>COMPANY</td><td>NAME</td><td>DATE</td><td>Subcategory</td>'+
         '</table>',
         link:function link(scope, element, attrs,state) {
             console.log($state.current.name);
@@ -42,19 +49,22 @@ angular.module('niftybinzApp').directive('commonDataTable',function ($timeout,$s
 angular.module('niftybinzApp').directive('commonFilter',function ($timeout,$state) {
     return{
         scope: {
+            'filterList':'=',
+            onSelect: "&"
         },
-        template:'<div class="col-lg-12 col-md-12 col-sm-4 text-center filters">' +
-        '<div class="btn-group" role="group" aria-label="...">' +
-        '<div class="btn-group" role="group" ng-repeat="filter in archiveFilters">' +
-        '<button type="button" ng-click="archiveSelectFilter(filter)" class="btn btn-default"' +
+        template:'<div class="col-lg-12 col-md-12 col-sm-4 text-center filters"><span id="label"></span>' +
+        '<div class="btn-group " role="group" aria-label="...">' +
+        '<div class="btn-group" role="group" ng-repeat="filter in filterList">' +
+        '<button type="button" ng-click="onSelect({filter:filter})" class="btn btn-default"' +
         'ng-class="{selected: filter.isSelected, disabled: filter.isDisabled}">' +
         '{{filter.filterName | uppercase}}</button></div></div></div>',
         link:function link(scope, element, attrs,state) {
-            console.log($state.current.name);
-            state = $state.current.name;
-            var el = element.find('#dataTable');
-            el.removeAttr('id');
-            el.attr('id', state+'Table');
+            console.log('filter....',scope.filterList);
+            // state = $state.current.name;
+            // var el = element.find('#dataTable');
+            // el.removeAttr('id');
+            // el.attr('id', state+'Table');
         }
     }
-})
+});
+

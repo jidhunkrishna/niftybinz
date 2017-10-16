@@ -160,7 +160,7 @@ angular
                 },
                 views: {
                     '@dashboard': {
-                        templateUrl: 'views/dashboard/common.html',
+                        templateUrl: 'views/dashboard/orders.html',
                         controller: 'OrderCtrl'
                     }
                 }
@@ -213,7 +213,7 @@ angular
                     }
                 }
             })
-            .state('reminders', {
+            .state('reminder', {
                 url: '/reminders',
                 parent: 'dashboard',
                 resolve:{

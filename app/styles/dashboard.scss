@@ -287,6 +287,16 @@ div.polaroid {
     margin-bottom: 25px;
     margin-left: 18%;
 }
+div.order_polaroid{
+    //width: 85%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 25px;
+    //margin-left: 18%;
+}
 .filters .btn-group{
     padding: 5px;
 }
+
+.row.inline-block
+{display: inline-block; float: none; vertical-align: top;}

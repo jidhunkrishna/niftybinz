@@ -9,6 +9,7 @@ angular.module('niftybinzApp').service('dataFetchService', function ($q, $http,$
         $rootScope.icon_loading = true;
         var deferred = $q.defer();
         var niftyUser = $window.localStorage.getItem('niftyUserName');
+        // var niftyUser = 'shanavaswn@gmail.com';
         var apiParams= {"niftyusername":niftyUser , "category": selectCategory};
         var archiveLists=[];
         $.ajax({
@@ -64,26 +65,32 @@ angular.module('niftybinzApp').service('dataTableService', function ($state,$tim
         console.log(state);
         console.log('keri...',Lists);
         // var custom_table = $timeout(function () {
-            // console.log('list........',Lists);
-            var custom_table = $('#'+state+'Table').DataTable( {
-                data: Lists,
-                columns: [
-                    { "data": "fileType","width": "20%"},
-                    { "data": "name" ,"width": "60%"},
-                    { "data": "date" ,
-                         "render":function (data) {
+        // console.log('list........',Lists);
+        var custom_table = $('#'+state+'Table').DataTable( {
+            data: Lists,
+            columns: [
+                { "data": "fileType","width": "20%",
+                    "orderable":false,
+                    "render":function (data) {
+                        var url ='http://logo.clearbit.com/'+data
+                        return '<img src='+url +' style="width: 30%; height:30%;object-fit: contain" alt ='+data+'>'
+                    }
+                },
+                { "data": "name" ,"width": "60%"},
+                { "data": "date" ,
+                    "render":function (data) {
                         return moment(data, "x").format("DD MMM ");
                     },
-                        "width": "20%"
-                    },
-                    {"data":'category',"visible": false}
-                ],
-                "info":false,
-                "lengthChange":false,
-                "paging":false,
-                "order": [[ 2, 'dec' ]]
-                // "searching":false
-            } );
+                    "width": "20%"
+                },
+                {"data":'subcategory',"visible": false}
+            ],
+            "info":false,
+            "lengthChange":false,
+            "paging":false,
+            "order": [[ 2, 'dec' ]]
+            // "searching":false
+        } );
 
         // });
         return custom_table;
@@ -92,27 +99,27 @@ angular.module('niftybinzApp').service('dataTableService', function ($state,$tim
 });
 
 angular.module('niftybinzApp').service('postDataService',['$http','$q',function($http,$q) {
-        var postDataService = this;
-        var deferred = $q.defer();
+    var postDataService = this;
+    var deferred = $q.defer();
 
-        postDataService.postData = function (requestURL,dataParam) {
-            var data = JSON.stringify(dataParam);
-            var config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            };
-            $http.post(requestURL,data,config)
-                .then(function (response, status, headers, config) {
-                    deferred.resolve(response);
-                })
-                .catch(function (error, status, headers, config) {
-                    console.log(error);
-                    console.log(status);
-                    deferred.reject(error);
-                });
-            return deferred.promise;
+    postDataService.postData = function (requestURL,dataParam) {
+        var data = JSON.stringify(dataParam);
+        var config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
         };
-        return postDataService;
+        $http.post(requestURL,data,config)
+            .then(function (response, status, headers, config) {
+                deferred.resolve(response);
+            })
+            .catch(function (error, status, headers, config) {
+                console.log(error);
+                console.log(status);
+                deferred.reject(error);
+            });
+        return deferred.promise;
+    };
+    return postDataService;
 
 }]);
