@@ -61,31 +61,6 @@ angular
         $locationProvider.hashPrefix('');
         $urlRouterProvider.otherwise('/main');
         $urlRouterProvider.when('/dashboard', '/dashboard/home');
-        /*$routeProvider
-         .when('/', {
-         templateUrl: 'views/main.html',
-         controller: 'MainCtrl',
-         controllerAs: 'main'
-         })
-         .when('/about', {
-         templateUrl: 'views/about.html',
-         controller: 'AboutCtrl',
-         controllerAs: 'about'
-         })
-         .when('/dashboard', {
-         templateUrl: 'views/dashboard.html',
-         controller: 'DashboardCtrl',
-         controllerAs: 'dashboard'
-         })
-         .when('/archives', {
-         templateUrl: 'views/dashboard/archives.html',
-         controller: 'ArchivesCtrl',
-         controllerAs: 'archives'
-         })
-         .otherwise({
-         redirectTo: '/'
-         });*/
-
         $stateProvider
             .state('main', {
                 url: "/main",
@@ -100,7 +75,8 @@ angular
             .state('dashboard', {
                 url: "/dashboard",
                 templateUrl: "views/dashboard.html",
-                controller: 'DashboardCtrl'
+                controller: 'DashboardCtrl',
+                authenticate: true
             })
             .state('home', {
                 url: '/home',
@@ -230,3 +206,15 @@ angular
                 }
             })
     });
+
+// angular.module("niftybinzApp")
+//   .run(function ($rootScope, $state, Authorization) {
+//     $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+//          console.log('run.....chnage');
+//       if (toState.authenticate && !Authorization.is_authenticate()){
+//         // User isn’t authenticated
+//         $state.go('main');
+//         event.preventDefault();
+//       }
+//     });
+//   });

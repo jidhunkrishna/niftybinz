@@ -69,7 +69,6 @@ angular.module('niftybinzApp')
                     var Url = 'http://chiteacake.com/webmailvalidation';
                     var dataParam = {"useremail":usermail};
                     var googlemailStatus = postDataService.postData(Url,dataParam);
-                    console.log('post service status...',googlemailStatus);
                     googlemailStatus.then(function (response) {
                         console.log('response from server...',response.data);
                         if (response.data.STATUS == 'EXISTS'){
@@ -80,11 +79,10 @@ angular.module('niftybinzApp')
                         }
                     else{
                             alert('Sorry!, This account is not linked with Nifty. Please download our mobile and create an account');
-                        console.log('enter to else....');
                         auth2.signOut();
                     }
                     }).catch(function () {
-                        auth2.signOut().then(function () {});
+                        auth2.signOut()
                     });
 
                 }
@@ -198,7 +196,7 @@ angular.module('niftybinzApp')
                             console.log(loginService.facebookLogin($scope.facebook));
                             loginService.facebookLogin($scope.facebook).then(function (response) {
                                 console.log('niftydata......',response.data);
-                                if(response.data.STATUS=='EXISTS'||response.data.STATUS == 'SUCCESS'){
+                                if(response.data.STATUS=='EXISTS'){
                                     $state.go('dashboard');
                                 }
                                 else{
@@ -257,81 +255,6 @@ angular.module('niftybinzApp')
                 });
             }
         }
-
-        $scope.filterCategories=['tax','expense','medical','coupons','insurance','car','work','membership','house','kids','others','all'];
-
-        $scope.list = [
-            {
-                'fileType' : "email",
-                'name': "20% off everything",
-                'date': "20 Sep",
-                'category': "coupons"
-            },{
-                'fileType' : "email",
-                'name': "15% off clothes",
-                'date': "20 Sep",
-                'category': "coupons"
-            },{
-                'fileType' : "doc",
-                'name': "meeting minutes",
-                'date': "19 Sep",
-                'category': "work"
-            },{
-                'fileType' : "img",
-                'name': "kohls coupomn",
-                'date': "19 Sep",
-                'category': "coupon"
-            },{
-                'fileType' : "email",
-                'name': "Report card for september",
-                'date': "18 Sep",
-                'category': "kids"
-            },{
-                'fileType' : "img",
-                'name': "art work tuesday",
-                'date': "17 Sep",
-                'category': "kids"
-            },{
-                'fileType' : "doc",
-                'name': "requirements",
-                'date': "15 Sep",
-                'category': "work"
-            },{
-                'fileType' : "email",
-                'name': "Car service in 10 days",
-                'date': "15 Sep",
-                'category': "car"
-            },
-        ];
-
-        //     $scope.signInCallback =function (authResult) {
-        //     console.log(authResult);
-        //     if (authResult['code']) {
-        //         var apiParams = {
-        //             "authcode": authResult['code']
-        //         };
-        //
-        //         console.log(authResult['code']);
-        //         // Send the auth code to the server
-        //         $.ajax({
-        //             url: "/passtokentoserver",
-        //             type: "POST",
-        //             headers: {
-        //                 'X-Requested-With': 'XMLHttpRequest'
-        //             },
-        //             contentType: "application/json;charset=utf-8",
-        //             dataType: "json",
-        //             processData: false,
-        //             data: JSON.stringify(apiParams),
-        //             success: function (response) {
-        //                 if (response.STATUS == 'SUCCESS') {
-        //                     //alert(response.MESSAGE);
-        //                     console.log(response);
-        //                 }
-        //             }
-        //         });
-        //     }
-        // }
 
 
     }]);

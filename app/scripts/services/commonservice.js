@@ -123,3 +123,14 @@ angular.module('niftybinzApp').service('postDataService',['$http','$q',function(
     return postDataService;
 
 }]);
+
+// angular.module('niftybinzApp').service('Authorization',['$state',function($state) {
+//     console.log('state change');
+//     var auth = this;
+//     auth.is_authenticated = false;
+//     auth.is_authenticate = function () {
+//       auth.is_authenticated = true;
+//       return auth.is_authenticated
+//     };
+//     return auth;
+// }]);

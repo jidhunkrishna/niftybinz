@@ -23,11 +23,18 @@ angular.module('niftybinzApp')
         $scope.coupon_details_table= $('#couponDetailsTable').DataTable( {
             data: $scope.selected_couponList,
             columns: [
-                { "data": "discount_price","width": "20%"},
+                { "data": "discount_price","width": "20%",
+                    "render":function (data) {
+                        if (data!='NULL'){
+                            return data;
+                        }
+                        else
+                            return 'N/A'
+                    }
+                },
                 { "data": "name" ,"width": "60%"},
                 { "data": "display_date" ,
                     "render":function (data) {
-                        // console.log(data);
                         if (data!='NULL'){
                             return moment(data).format("DD MM");
                         }

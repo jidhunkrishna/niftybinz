@@ -8,7 +8,7 @@
  * Controller of the niftybinzApp
  */
 angular.module('niftybinzApp')
-    .controller('DashboardCtrl', function ($scope, $filter, $location, $state,$rootScope) {
+    .controller('DashboardCtrl', function ($scope, $filter, $location, $state,$rootScope,$window) {
         // $scope.goTo = function () {
         //     console.log("goto");
         //     $location.path('#/archives');
@@ -20,15 +20,16 @@ angular.module('niftybinzApp')
         $scope.searchArchiveText = "";
 
         $scope.Logout=function(){
-            console.log('logout.....function...');
             FB.getLoginStatus(function(response) {
-               console.log('status',response)
+                if(response.status === 'connected'){
+                    FB.logout(function (response) {})
+                }
             });
-            FB.logout(function(response) {
-                console.log('logging out from fb......and app....');
-                console.log(response);
-            });
-            auth2.signOut().then(function () {});
+
+            if(auth2.isSignedIn.get()){
+                auth2.signOut();
+            }
+            $window.localStorage.clear();
         };
 
         // console.log($scope.$state);
