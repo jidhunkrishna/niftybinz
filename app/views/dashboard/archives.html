@@ -1,12 +1,13 @@
- <div class="container archives-page">
+<div class="archives-page">
+    <div class="container">
         <div class="input-group col-md-12">
             <input type="text" id="archiveSearch" class="form-control input-lg" ng-model="searchArchiveText" placeholder="Search archives" />
-                    <span class="input-group-btn" ng-show="searchArchiveText.length==0">
+            <span class="input-group-btn" ng-show="searchArchiveText.length==0">
                         <button class="btn btn-info btn-lg" type="button">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </span>
-                    <span class="input-group-btn" ng-hide="searchArchiveText.length==0" ng-click=cancelSearch()>
+            <span class="input-group-btn" ng-hide="searchArchiveText.length==0" ng-click=cancelSearch()>
                         <button class="btn btn-info btn-lg" type="button">
                             <i class="glyphicon glyphicon-remove"></i>
                         </button>
@@ -27,47 +28,15 @@
         </div>
         <div class="row ">
             <table id="archiveTable" class="table table-bordered table-striped ">
-
                 <thead>
                 <tr>
                     <td>COMPANY</td>
                     <td>NAME</td>
                     <td>DATE</td>
                     <td>Category</td>
-                    <!--<td>-->
-                            <!--<span ng-click="sortType = 'fileType' ; sortReverse = !sortReverse">TYPE-->
-                                <!--<span ng-show="sortType == 'fileType'" class="fa fa-caret-down"></span>-->
-                            <!--</span>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                            <!--<span >-->
-                                    <!--<span class="fa fa-caret-down"></span> NAME-->
-                            <!--</span>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                            <!--<span ng-click="sortType = 'date' ; sortReverse = !sortReverse">-->
-                                    <!--<span ng-show="sortType == 'date'" class="fa fa-caret-down"></span> DATE-->
-                            <!--</span>-->
-                    <!--</td>-->
                 </tr>
                 </thead>
-
-                <!--<tbody>-->
-                <!--<tr ng-repeat="list in archiveLists | orderBy:archiveSortType:sortReverse | filter:archiveFilterBy | filter:searchArchiveText">-->
-                <!--<td>{{ list.fileType }}</td>-->
-                <!--<td>{{ list.name }}</td>-->
-                <!--<td>{{ list.date }}</td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-
             </table>
-            <!--<table id="archiveTable" class="display" width="100%"></table>-->
-            <!-- <md-list>
-                    <md-list-item ng-repeat="list in lists">
-                        <md-icon mdListIcon>mail</md-icon>
-                        <h3 mdLine> {{list.name}} </h3>
-                        <p mdLine> {{list.date}} </p>
-                    </md-list-item>
-                </md-list>-->
         </div>
     </div>
+</div>

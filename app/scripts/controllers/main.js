@@ -66,7 +66,7 @@ angular.module('niftybinzApp')
                 if (auth2.isSignedIn.get()) {
                     var profile = auth2.currentUser.get().getBasicProfile();
                     var usermail = profile.getEmail();
-                    var Url = 'http://192.168.137.57:3000/webmailvalidation';
+                    var Url = 'http://chiteacake.com/webmailvalidation';
                     var dataParam = {"useremail":usermail};
                     var googlemailStatus = postDataService.postData(Url,dataParam);
                     console.log('post service status...',googlemailStatus);
