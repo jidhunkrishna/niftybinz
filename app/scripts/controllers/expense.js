@@ -2,63 +2,16 @@
  * Created by jidhun krishna on 9/10/17.
  */
 angular.module('niftybinzApp')
-    .controller('ExpenseCtrl', function ($scope, $state,expenseLists, dataTableService, $timeout,$filter) {
+    .controller('ExpenseCtrl', function ($scope,$rootScope, $state,expenseLists, dataTableService,dialogService,
+                                         $timeout,$filter,toastService) {
 
-        console.log('expenseLists controller.................',expenseLists);
+        //redirect to home page if there is no email to show
+        if (expenseLists == ''){
+            $state.go('home');
+            toastService.notification();
+        }
         $scope.expenseLists = expenseLists;
         $scope.searchText = "";
-        // var state = $state.current.name;
-        $scope.expense1Lists = [
-            {
-                'fileType': "email",
-                'name': "20% off everything",
-                'date': "20 Sep",
-                'category': "expense",
-                'subcategory':"home"
-          }, {
-                'fileType': "email",
-                'name': "15% off clothes",
-                'date': "20 Sep",
-                'category': "expense",
-                'subcategory':"kids"
-          }, {
-                'fileType': "doc",
-                'name': "meeting minutes",
-                'date': "19 Sep",
-                'category': "expense",
-                'subcategory':"kids"
-          }, {
-                'fileType': "img",
-                'name': "kohls coupomn",
-                'date': "19 Sep",
-                'category': "expense",
-                'subcategory':"medical"
-          }, {
-                'fileType': "email",
-                'name': "Report card for september",
-                'date': "18 Sep",
-                'category': "expense",
-                'subcategory':"travel"
-          }, {
-                'fileType': "img",
-                'name': "art work tuesday",
-                'date': "17 Sep",
-                'category': "expense",
-                'subcategory':"home"
-          }, {
-                'fileType': "doc",
-                'name': "requirements",
-                'date': "15 Sep",
-                'category': "expense",
-                'subcategory':"amazon"
-          }, {
-                'fileType': "email",
-                'name': "Car service in 10 days",
-                'date': "15 Sep",
-                'category': "expense",
-                'subcategory':"car"
-          }
-        ];
         $scope.FiltersList = [
             {
                 'filterName': 'home',
@@ -110,10 +63,8 @@ angular.module('niftybinzApp')
 
 
         $scope.SelectFilter=function (filter) {
-            console.log('expense .filtering................',filter);
             if (!filter.isDisabled){
                 if (filter.filterName == 'all'){
-                    console.log('alll......');
                     $scope.expense_table.columns(3).search('').draw();
                 }
                 else
@@ -134,10 +85,8 @@ angular.module('niftybinzApp')
 
         // Enabling filter buttons if the category is present in the archive list
         $scope.expenseCategoriesList = $filter('unique')($scope.expenseLists, 'subcategory');
-        console.log($scope.expenseCategoriesList,"exp.....................");
         $scope.FiltersList.forEach(function (item) {
             $scope.expenseCategoriesList.forEach(function (cat) {
-                // console.log($filter('lowercase')(cat.category));
                 if (item.filterName === $filter('lowercase')(cat.subcategory)) {
                     item.isDisabled = false;
                 }
@@ -146,17 +95,23 @@ angular.module('niftybinzApp')
 
         $timeout(function () {
             $scope.expense_table = dataTableService.createDataTable($scope.expenseLists);
-            $('#'+$scope.state+'Search').keyup(function(){
-                console.log('keyuppp....');
+            $('#expenseSearch').keyup(function(){
                 $scope.expense_table.search($(this).val()).draw();
+            });
+
+            // on row click of the table, display a popup contain the details of the mail
+            $('#expenseTable tbody').on('click', 'tr', function (ev) {
+                var data = $scope.expense_table.row( this ).data();
+                if(data){
+                    $rootScope.popup_loading = true;
+                }
+                dialogService.popup(data,ev);
             });
         });
 
         // expense table common serach cancel operation
         $scope.cancelSearch = function () {
-            console.log('cancel.........');
             $scope.searchText = "";
             $scope.expense_table.search($scope.searchText).draw();
         };
-
     });

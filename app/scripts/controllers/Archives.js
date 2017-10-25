@@ -2,55 +2,15 @@
  * Created by jidhun krishna on 6/10/17.
  */
 angular.module('niftybinzApp')
-    .controller('ArchiveCtrl', function ($scope, $filter,$rootScope,archiveLists, $location, $state) {
-
-        console.log('icon_loading....',$rootScope.icon_loading);
-
+    .controller('ArchiveCtrl', function ($scope, $filter,$rootScope,archiveLists,$http,
+                                         dataFetchService,dialogService,toastService) {
+        //redirect to home page if there is no email to show
+        if (archiveLists == ''){
+            $state.go('home');
+            toastService.notification();
+        }
         $scope.searchArchiveText = "";
         $scope.archiveLists=archiveLists;
-        // $scope.archiveLists = [
-        //     {
-        //         'fileType': "email",
-        //         'name': "20% off everything",
-        //         'date': "20 Sep",
-        //         'category': "coupons"
-        //   }, {
-        //         'fileType': "email",
-        //         'name': "15% off clothes",
-        //         'date': "20 Sep",
-        //         'category': "coupons"
-        //   }, {
-        //         'fileType': "doc",
-        //         'name': "meeting minutes",
-        //         'date': "19 Sep",
-        //         'category': "work"
-        //   }, {
-        //         'fileType': "img",
-        //         'name': "kohls coupomn",
-        //         'date': "19 Sep",
-        //         'category': "coupon"
-        //   }, {
-        //         'fileType': "email",
-        //         'name': "Report card for september",
-        //         'date': "18 Sep",
-        //         'category': "kids"
-        //   }, {
-        //         'fileType': "img",
-        //         'name': "art work tuesday",
-        //         'date': "17 Sep",
-        //         'category': "kids"
-        //   }, {
-        //         'fileType': "doc",
-        //         'name': "requirements",
-        //         'date': "15 Sep",
-        //         'category': "work"
-        //   }, {
-        //         'fileType': "email",
-        //         'name': "Car service in 10 days",
-        //         'date': "15 Sep",
-        //         'category': "car"
-        //   }
-        // ];
         $scope.archiveFilters = [
             {
                 'filterName': 'tax',
@@ -104,15 +64,15 @@ angular.module('niftybinzApp')
                 'isSelected': true
             }
         ];
-        console.log( $scope.archiveLists);
-        var archive_table= $('#archiveTable').DataTable( {
+        var archive_table= $('#archivesTable').DataTable( {
             data: $scope.archiveLists,
             columns: [
                 { "data": "fileType","width": "20%",
-                    "orderable":false,
+                    "type": 'alt-string',
                     "render":function (data) {
-                        var url ='http://logo.clearbit.com/'+data
-                        return '<img src='+url +' style="width: 30%; height:30% ;object-fit: contain" alt ='+data+'>'
+                        var url ='http://logo.clearbit.com/'+data ;
+                        return '<img src='+url +' style="width: 30%; height:30% ;object-fit: contain"' +
+                            ' alt='+'"'+data+'"'+'>'
                     }
                 },
                 { "data": "name" ,"width": "60%"},
@@ -127,47 +87,52 @@ angular.module('niftybinzApp')
             "info":false,
             "lengthChange":false,
             "paging":false,
-            "order": [[ 2, 'dec' ]]
+            "order": [[ 2, 'dec' ]],
             // "searching":false
         } );
 
 
         //  Archive table common search
         $('#archiveSearch').keyup(function(){
-            console.log(archive_table);
             archive_table.search($(this).val()).draw() ;
         });
 
         // Archive table common serach cancel operation
         $scope.cancelSearch = function () {
-            console.log('cancel.........');
             $scope.searchArchiveText = "";
             archive_table.search($scope.searchArchiveText).draw();
         };
 
         //Enabling filter buttons if the category is present in the archive list
         $scope.archiveCategoriesList = $filter('unique')($scope.archiveLists, 'category');
-        console.log($scope.archiveCategoriesList);
         $scope.archiveFilters.forEach(function (item) {
             $scope.archiveCategoriesList.forEach(function (cat) {
-                // console.log($filter('lowercase')(cat.category));
                 if (item.filterName === $filter('lowercase')(cat.category)) {
                     item.isDisabled = false;
                 }
             });
         });
 
-        // Archive table category wise botton type filters 
+        // Archive table category wise button type filters
         $scope.archiveSelectFilter=function (filter) {
-            console.log('filtering................',filter);
-            if (!filter.isDisabled){
+            if (!filter.isDisabled && !filter.isSelected){
+                $scope.filter_loading= true;
                 if (filter.filterName == 'all'){
-                    console.log('alll......');
-                    archive_table.columns(3).search('').draw();
+                    archive_table.clear().rows.add($scope.archiveLists).draw();
+                    $scope.filter_loading= false;
+                    // archive_table.columns(3).search('').draw();
                 }
-                else
-                    archive_table.columns(3).search(filter.filterName).draw();
-
+                else{
+                    function titleCase(string) {
+                        return string.charAt(0).toUpperCase() + string.slice(1);
+                    }
+                    var category = titleCase(filter.filterName);
+                    dataFetchService.getList(category).then(function (response) {
+                        archive_table.clear().rows.add(response).draw();
+                        $scope.filter_loading= false;
+                    });
+                    // archive_table.columns(3).search(filter.filterName).draw();
+                }
                 if(!filter.isSelected){
                     filter.isSelected = !filter.isSelected;
                 }
@@ -179,5 +144,14 @@ angular.module('niftybinzApp')
                     });
                 }
             }
-        }
+        };
+
+        // on row click of the table, display a popup contain the details of the mail
+        $('#archivesTable tbody').on('click', 'tr', function (ev) {
+            var data = archive_table.row( this ).data();
+            if(data){
+                $rootScope.popup_loading = true;
+            }
+            dialogService.popup(data,ev);
+        } );
     });

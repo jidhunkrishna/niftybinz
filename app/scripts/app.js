@@ -1,5 +1,7 @@
 'use strict';
-
+/**
+ * Created by jidhun krishna on 6/10/17.
+ */
 /**
  * @ngdoc overview
  * @name niftybinzApp
@@ -8,43 +10,6 @@
  *
  * Main module of the application.
  */
-
-function onLoadFunction() {
-    gapi.client.setApiKey('AIzaSyB3OzW6ibhZg8HJfkWDVFlFNVB4wJyyi7Q');
-    gapi.client.load('plus', 'v1', function () {});
-
-    window.fbAsyncInit = function () {
-        FB.init({
-            appId: '140101496606692',
-            cookie: true,
-            xfbml: true,
-            version: 'v2.10',
-            status: true
-        });
-        //FB.AppEvents.logPageView();  
-        FB.getLoginStatus(function (response) {
-            if (response.status === 'connected') {
-                console.log("FB connected");
-            } else if (response.status === 'not_authorized') {
-                console.log("FB not authorized");
-            } else {
-
-            }
-        });
-    };
-
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-            return;
-        }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-}
-
 
 angular
     .module('niftybinzApp', [
@@ -55,7 +20,8 @@ angular
         'ngSanitize',
         'ngTouch',
         'ngMaterial',
-        'ui.router'
+        'ui.router',
+        'ui.bootstrap'
     ])
     .config(function ($locationProvider, $routeProvider,$stateProvider,$urlRouterProvider) {
         $locationProvider.hashPrefix('');
@@ -65,12 +31,8 @@ angular
             .state('main', {
                 url: "/main",
                 templateUrl: "views/main.html",
-                controller: 'MainCtrl'
-            })
-            .state('about', {
-                url: "/about",
-                templateUrl: "views/about.html",
-                controller: 'AboutCtrl'
+                controller: 'MainCtrl',
+                authenticate:false
             })
             .state('dashboard', {
                 url: "/dashboard",
@@ -81,11 +43,13 @@ angular
             .state('home', {
                 url: '/home',
                 parent: 'dashboard',
-                templateUrl: 'views/dashboard/home.html'
+                templateUrl: 'views/dashboard/home.html',
+                authenticate: true
             })
             .state('archives', {
                 url: '/archives',
                 parent: 'dashboard',
+                authenticate: true,
                 resolve:{
                     archiveLists:function(dataFetchService){
                         var category='';
@@ -102,6 +66,7 @@ angular
             .state('coupons', {
                 url: '/coupons',
                 parent: 'dashboard',
+                authenticate: true,
                 resolve:{
                     couponsLists:function(dataFetchService){
                         var category="Coupon";
@@ -118,6 +83,7 @@ angular
             .state('coupons details', {
                 url: '/details/{param:json}',
                 parent: 'coupons',
+                authenticate: true,
                 views: {
                     '@dashboard': {
                         templateUrl: 'views/dashboard/coupon_detail.html',
@@ -128,6 +94,7 @@ angular
             .state('orders', {
                 url: '/orders',
                 parent: 'dashboard',
+                authenticate: true,
                 resolve:{
                     ordersLists:function(dataFetchService){
                         var category="Order";
@@ -144,6 +111,7 @@ angular
             .state('expense', {
                 url: '/expense',
                 parent: 'dashboard',
+                authenticate: true,
                 resolve:{
                     expenseLists:function(dataFetchService){
                         var category="Expense";
@@ -160,6 +128,7 @@ angular
             .state('income', {
                 url: '/income',
                 parent: 'dashboard',
+                authenticate: true,
                 resolve:{
                     incomeLists:function(dataFetchService){
                         var category="Income";
@@ -176,6 +145,7 @@ angular
             .state('todo', {
                 url: '/todo',
                 parent: 'dashboard',
+                authenticate: true,
                 resolve:{
                     todoLists:function(dataFetchService){
                         var category="Todo";
@@ -192,6 +162,7 @@ angular
             .state('reminder', {
                 url: '/reminders',
                 parent: 'dashboard',
+                authenticate: true,
                 resolve:{
                         reminderLists:function(dataFetchService){
                         var category="Reminders";
@@ -206,15 +177,17 @@ angular
                 }
             })
     });
+angular.module("niftybinzApp")
+    .run(function($transitions,$state) {
+        $transitions.onStart({ }, function(trans) {
+            var auth = trans.injector().get('Authorization');
+            trans.promise.then(function (value) {
+                var authenticate = value.authenticate;
+                if (authenticate && !auth.isAuthenticated()) {
+                    // User isn't authenticated. Redirect to a login page
+                    return $state.go('main');
+                }
+            });
 
-// angular.module("niftybinzApp")
-//   .run(function ($rootScope, $state, Authorization) {
-//     $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
-//          console.log('run.....chnage');
-//       if (toState.authenticate && !Authorization.is_authenticate()){
-//         // User isn’t authenticated
-//         $state.go('main');
-//         event.preventDefault();
-//       }
-//     });
-//   });
+        });
+    });

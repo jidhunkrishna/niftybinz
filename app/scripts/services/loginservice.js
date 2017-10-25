@@ -34,41 +34,4 @@ angular.module('niftybinzApp')
                 });
             return deferred.promise;
         };
-
-        loginService.googleLogin = function () {
-            var dataParam = JSON.stringify({
-                "authcode": ""
-            });
-            var requestURL = 'http://chiteacake.com/passtokentoserver';
-
-            return $http({
-                url: requestURL,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': $rootScope.authorizationToken
-                },
-                data: dataParam
-            });
-        };
-
-
-
-        loginService.gmailLogin = function (){
-            var dataParam = JSON.stringify({
-                "authcode": ""
-            });
-            var requestURL = 'http://chiteacake.com/readgooglemails';
-
-            return $http({
-                url: requestURL,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': $rootScope.authorizationToken
-                },
-                data: dataParam
-            });
-        };
-
     });

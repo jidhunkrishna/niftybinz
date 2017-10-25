@@ -18,7 +18,6 @@ angular.module('niftybinzApp').directive('commonSearch',function ($timeout,$stat
         '<i class="glyphicon glyphicon-remove"></i>' +
         '</button></span></div>',
         link:function link(scope, element, attrs,state) {
-            console.log($state.current.name);
             state = $state.current.name;
             var el = element.find('#common_search');
             el.removeAttr('id');
@@ -32,12 +31,12 @@ angular.module('niftybinzApp').directive('commonDataTable',function ($timeout,$s
     return{
         scope: {
         },
-        template:'<table id="dataTable" class="table table-bordered table-striped ">' +
+        template:'<table id="dataTable" style="cursor:pointer" class="table table-bordered table-striped ">' +
         '<thead>' +
-        '<tr><td>COMPANY</td><td>NAME</td><td>DATE</td><td>Subcategory</td>'+
+        '<tr><td>COMPANY</td><td>NAME</td><td>DATE</td><td>Subcategory</td></tr>' +
+        '</thead>' +
         '</table>',
         link:function link(scope, element, attrs,state) {
-            console.log($state.current.name);
             state = $state.current.name;
             var el = element.find('#dataTable');
             el.removeAttr('id');
@@ -59,11 +58,7 @@ angular.module('niftybinzApp').directive('commonFilter',function ($timeout,$stat
         'ng-class="{selected: filter.isSelected, disabled: filter.isDisabled}">' +
         '{{filter.filterName | uppercase}}</button></div></div></div>',
         link:function link(scope, element, attrs,state) {
-            console.log('filter....',scope.filterList);
             // state = $state.current.name;
-            // var el = element.find('#dataTable');
-            // el.removeAttr('id');
-            // el.attr('id', state+'Table');
         }
     }
 });

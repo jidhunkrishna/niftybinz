@@ -280,6 +280,17 @@
     margin: -50px 0px 0px -50px;
     z-index: 1
 }
+.popup_loading{
+    position: fixed;
+    left: 50%;
+    margin: -50px 0px 0px -50px;
+    z-index: 1
+}
+.filter_loading{
+    position: fixed;
+    top: 25%;left: 50%;
+    z-index: 1
+}
 div.polaroid {
     width: 60%;
     background-color: white;

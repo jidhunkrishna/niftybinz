@@ -2,14 +2,17 @@
  * Created by jidhun krishna on 9/10/17.
  */
 angular.module('niftybinzApp')
-    .controller('CouponCtrl', function ($scope, $state,couponsLists, dataTableService, $timeout,$filter) {
+    .controller('CouponCtrl', function ($scope, $state,couponsLists, dataTableService, $timeout,$filter,toastService) {
 
+        //redirect to home page if there is no email to show
+        if (couponsLists == ''){
+            $state.go('home');
+            toastService.notification();
+        }
         $scope.couponLists = couponsLists;
-        console.log($scope.couponLists);
         $scope.unique_coupons = $filter('unique')($scope.couponLists, 'fileType');
         $scope.all_couponsList = $scope.unique_coupons;
         $scope.subcategory_couponsList= $filter('unique_multiple')($scope.couponLists, ['fileType','subcategory']);
-        var state = $state.current.name;
         $scope.category_all=true;
         $scope.couponFilters = [
             {
@@ -77,7 +80,6 @@ angular.module('niftybinzApp')
 
         $scope.couponSelectFilter = function (filter) {
 
-            console.log('coupon filter.......',filter);
             if (!filter.isDisabled) {
                 if(filter.filterName=='all'){
                     $scope.all_couponsList = $scope.unique_coupons;
@@ -86,7 +88,6 @@ angular.module('niftybinzApp')
                 else{
                     $scope.category_all=false;
                     $scope.all_couponsList = $filter('filter')($scope.subcategory_couponsList, {subcategory:filter.filterCategory});
-                    console.log('length..',$scope.all_couponsList.length);
                 }
 
                 if(!filter.isSelected){

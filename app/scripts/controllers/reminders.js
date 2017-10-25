@@ -2,24 +2,27 @@
  * Created by jidhun krishna on 9/10/17.
  */
 angular.module('niftybinzApp')
-    .controller('ReminderCtrl', function ($scope, $state,reminderLists, dataTableService, $timeout) {
-
-        console.log('reminder controller.................',reminderLists);
+    .controller('ReminderCtrl', function ($scope,$rootScope, $state,reminderLists, dataTableService,dialogService,
+                                          $timeout,toastService){
+        //redirect to home page if there is no email to show
+        if (reminderLists == ''){
+            $state.go('home');
+            toastService.notification();
+        }
         $scope.reminderLists = reminderLists;
-        console.log($scope.state);
         $scope.FiltersList = [
             {
-                'filterName': 'APPOINTMENTS',
+                'filterName': 'appointments',
                 // 'filterCategory':'Fashion',
                 'isDisabled': true,
                 'isSelected': false
             }, {
-                'filterName': 'KIDS',
+                'filterName': 'kids',
                 // 'filterCategory':'Dining',
                 'isDisabled': true,
                 'isSelected': false
             }, {
-                'filterName': 'BIRTHDAYS',
+                'filterName': 'birthdays',
                 // 'filterCategory':'Entertaining',
                 'isDisabled': true,
                 'isSelected': false
@@ -32,20 +35,18 @@ angular.module('niftybinzApp')
         ];
 
         $scope.SelectFilter=function (filter) {
-            console.log('filtering................',filter);
             if (!filter.isDisabled){
                 if (filter.filterName == 'all'){
-                    console.log('alll......');
-                    archive_table.columns(3).search('').draw();
+                    $scope.reminder_table.columns(3).search('').draw();
                 }
                 else
-                    archive_table.columns(3).search(filter.filterName).draw();
+                    $scope.reminder_table.columns(3).search(filter.filterName).draw();
 
                 if(!filter.isSelected){
                 filter.isSelected = !filter.isSelected;
                     }
                 if (filter.isSelected) {
-                    angular.forEach($scope.archiveFilters, function (value, key) {
+                    angular.forEach($scope.FiltersList, function (value, key) {
                         if (filter.filterName !== value.filterName) {
                             value.isSelected = false;
                         }
@@ -56,9 +57,17 @@ angular.module('niftybinzApp')
 
         $timeout(function () {
             $scope.reminder_table = dataTableService.createDataTable($scope.reminderLists);
-            $('#'+$scope.state+'Search').keyup(function(){
-                console.log('keyuppp....');
+            $('#reminderSearch').keyup(function(){
                 $scope.reminder_table.search($(this).val()).draw();
+            });
+
+            // on row click of the table, display a popup contain the details of the mail
+            $('#reminderTable tbody').on('click', 'tr', function (ev) {
+                var data = $scope.reminder_table.row( this ).data();
+                if(data){
+                    $rootScope.popup_loading = true;
+                }
+                dialogService.popup(data,ev);
             });
         });
 
