@@ -234,18 +234,18 @@ h1.title {
     position: relative;
     margin: 0 60px 50px;
 }
-//.login_card .input-container input {
-//    outline: none;
-//    z-index: 1;
-//    position: relative;
-//    background: none;
-//    width: 100%;
-//    height: 60px;
-//    border: 0;
-//    color: #212121;
-//    font-size: 24px;
-//    font-weight: 400;
-//}
+.login_card .input-container input {
+    outline: none;
+    z-index: 1;
+    position: relative;
+    background: none;
+    width: 100%;
+    height: 60px;
+    border: 0;
+    color: #212121;
+    font-size: 24px;
+    font-weight: 400;
+}
 
 .login_card .input-container input:focus ~ label {
     color: #9d9d9d;
