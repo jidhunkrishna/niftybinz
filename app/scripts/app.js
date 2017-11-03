@@ -165,7 +165,7 @@ angular
                 authenticate: true,
                 resolve:{
                         reminderLists:function(dataFetchService){
-                        var category="Reminders";
+                        var category="Reminder";
                         return  dataFetchService.getList(category);
                     }
                 },

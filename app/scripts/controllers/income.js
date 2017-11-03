@@ -18,10 +18,11 @@ angular.module('niftybinzApp')
             // on row click of the table, display a popup contain the details of the mail
             $('#incomeTable tbody').on('click', 'tr', function (ev) {
                 var data = $scope.income_table.row( this ).data();
+                $(this).prop('disabled', true);
                 if(data){
                     $rootScope.popup_loading = true;
                 }
-                dialogService.popup(data,ev);
+                dialogService.popup(data,ev,this);
             });
         });
     });

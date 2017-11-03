@@ -24,15 +24,17 @@
                 <span class="col-md-12 popup_loading" ng-show="popup_loading">
                 <i class="fa fa-spinner fa-spin"  style="font-size:32px;color: black"></i>
                 </span>
-                <div class="col-md-4 " ng-repeat="order in ordersLists | filter:{fileType:searchText} |orderBy:orderValue">
-                    <div class="order_polaroid" ng-click="mail_details(order,$event)" >
+                <div class="col-md-4 "  ng-repeat="order in ordersLists | filter:{fileType:searchText} |orderBy:orderValue">
+                    <div class="order_polaroid hvr-shadow button_effect" ng-click="mail_details(order,$event)" >
                         <img ng-src="http://logo.clearbit.com/{{order.fileType}}"
-                             style="height: 127px;margin-left: auto;margin-right: auto;display: block;"
+                             style="width:127px;height: 127px;margin-left: auto;margin-right: auto;display: block;object-fit:contain"
                              alt={{order.fileType}} onerror="this.src='images/image-not-available.png';">
                         <hr>
                         <div class="row" style="padding:2%;height:100px;overflow-y:auto">
                             <div class="col-sm-10 col-md-10 card-text" style="font-family: fantasy;font-weight: 600;"><p>{{order.name}}</p></div>
-                            <div class="col-sm-2 col-md-2 card-text" style="font-family: fantasy;font-weight: 600;"><p>{{order.date|date:"dd MMM"}}</p></div>
+                            <div class="col-sm-2 col-md-2 card-text" style="font-family: fantasy;font-weight: 600;">
+                                <p>{{order.display_date!='1980-01-01'?(order.display_date|date:"dd MMM yyyy"):'N/A'}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

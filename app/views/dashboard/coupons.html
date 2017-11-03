@@ -34,11 +34,12 @@
                              style="margin-left: 20%;width: 60%;height: auto;margin: 5% 20%;">
                  </div>
                 <div class="col-md-4 " ng-repeat="coupon in all_couponsList | filter:{fileType:searchText}">
-                    <div class="polaroid btn btn-block" ui-sref="coupons details({param:{Coupon: coupon.id,flag:category_all}})">
-                        <img ng-src="http://logo.clearbit.com/{{coupon.fileType}}" style="width: 100%;height: 127px;object-fit:contain"
+                    <div class="polaroid button_effect hvr-shadow" ui-sref="coupons details({param:{Coupon: coupon.id,flag:category_all}})">
+                        <img ng-src="http://logo.clearbit.com/{{coupon.fileType}}"
+                             style="width: 127px;height: 127px;object-fit:contain;margin-left: auto;margin-right: auto;display: block;"
                              alt={{coupon.fileType}} onerror="this.src='images/image-not-available.png';">
                         <div style="text-align: center; padding: 9px 8px;word-wrap: break-word">
-                            <p class="card-text" style="font-family: fantasy;font-weight: 600;">{{coupon.fileType}}</p>
+                            <p class="card-text" style="font-family: fantasy;font-weight: 600;height:40px;">{{coupon.fileType}}</p>
                         </div>
                     </div>
                 </div>

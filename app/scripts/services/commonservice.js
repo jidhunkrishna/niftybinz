@@ -36,7 +36,8 @@ angular.module('niftybinzApp').service('dataFetchService', function ($q, $http,$
                                 'display_date':value.display_date,
                                 'username':value.username,
                                 'attachment':value.attachment,
-                                'upload':value.upload
+                                'upload':value.upload,
+                                'reminder_time':value.reminder_time
                             });
                         });
                         deferred.resolve(archiveLists)
@@ -76,10 +77,30 @@ angular.module('niftybinzApp').service('dataTableService', function ($state,$tim
                             ' alt='+'"'+data+'"'+'>'
                     }
                 },
-                { "data": "name" ,"width": "60%"},
-                { "data": "date" ,
+                { "data": null,
                     "render":function (data) {
-                        return moment(data, "x").format("DD MMM ");
+                        if (state=='expense'){
+                            return data.discount_price=='NULL'? data.name:
+                                data.name+'<span style="float:right"><b>Amount:'+data.discount_price+'</b></span>'
+                        }
+                        return data.name;
+                    },
+                    "width": "60%"},
+                { "data": null ,
+                    "render":function (data,type) {
+                        // console.log(data.display_date);
+                        if ( type === 'display'){
+                            if (data.display_date=='1980-01-01' || !moment(data.display_date,'YYYY-MM-DD',true).isValid()){
+                                return 'N/A'
+                            }
+                            else{
+                                var displayDate = moment(data.display_date,'YYYY-MM-DD');
+                                var reminderDate = data.reminder_time!='00:00:00'?data.reminder_time:'';
+                                return state=='reminder'?moment(displayDate).format("DD MMM YYYY")+'  '+reminderDate:
+                                        moment(displayDate).format("DD MMM YYYY");
+                            }
+                        }
+                        return data.display_date;
                     },
                     "width": "20%"
                 },
@@ -124,21 +145,10 @@ angular.module('niftybinzApp').service('postDataService',['$http','$q',function(
 angular.module('niftybinzApp').service('dialogService',['postDataService','$mdDialog','$rootScope',
     function (postDataService,$mdDialog,$rootScope) {
         var dialogService =this;
-        dialogService.popup = function (rowData,ev) {
+        dialogService.popup = function (rowData,ev,row_element) {
             var data = rowData;
-            var url ='http://chiteacake.com/getemailbodycontent';
-            var param = {
-                'messageid':data.id,
-                'useremail':data.username
-            };
-            postDataService.postData(url,param).then(function (response) {
-                if (response.data.STATUS = "SUCCESS"){
-                    var template_html = response.data.DETAILS.html;
-                }
-                $rootScope.popup_loading = false;
-                showAdvanced(ev,template_html);
-            });
             var showAdvanced = function(ev,template_html) {
+                $(row_element).prop('disabled', false);
                 $mdDialog.show({
                     targetEvent: ev,
                     template:'<md-dialog>' +
@@ -172,6 +182,31 @@ angular.module('niftybinzApp').service('dialogService',['postDataService','$mdDi
                     // no specific instance reference is needed.
                     $mdDialog.hide();
                 };
+            }
+            if (data.upload == 'NULL'){
+                var url ='http://chiteacake.com/getemailbodycontent';
+                var param = {
+                    'messageid':data.id,
+                    'useremail':data.username
+                };
+                postDataService.postData(url,param).then(function (response) {
+                    if (response.data.STATUS = "SUCCESS"){
+                        var template_html = response.data.DETAILS.html;
+                    }
+                    $rootScope.popup_loading = false;
+                    template_html=='NULL' ? showAdvanced(ev,'<img src="../../images/not_available.png" class="image_center">')
+                        :showAdvanced(ev,'<div style="padding:1%">'+template_html+'</div>');
+                }).catch(function (error) {
+                    console.log(error);
+                    $(row_element).prop('disabled', false);
+                    $rootScope.popup_loading = false;
+                    showAdvanced(ev,'<img src="../../images/not_available.png" class="image_center">')
+                });
+            }else{
+                var template_html = data.attachment;
+                $rootScope.popup_loading = false;
+                template_html=='NULL' ? showAdvanced(ev,'<img src="../../images/not_available.png" class="image_center">')
+                    :showAdvanced(ev,'<img src="'+template_html+'" style="width: 100%;height: 100%;padding: 3%" >');
             }
         };
         return dialogService;

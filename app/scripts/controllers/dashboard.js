@@ -8,7 +8,7 @@
  * Controller of the niftybinzApp
  */
 angular.module('niftybinzApp')
-    .controller('DashboardCtrl', function ($scope, $filter, $location, $state,$rootScope,$window) {
+    .controller('DashboardCtrl', function ($scope, $filter, $location, $state,$rootScope,$window,$http) {
 
         $scope.state=$state.current.name;
         $scope.$state = $state;

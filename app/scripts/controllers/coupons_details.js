@@ -37,12 +37,16 @@ angular.module('niftybinzApp')
                 },
                 { "data": "name" ,"width": "60%"},
                 { "data": "display_date" ,
-                    "render":function (data) {
-                        if (data!='NULL'){
-                            return moment(data).format("DD MM");
+                    "render":function (data,type) {
+                        if(type == 'display'){
+                            if (data!='1980-01-01' && moment(data,'YYYY-MM-DD',true).isValid()){
+                                return moment(data,'YYYY-MM-DD').format("DD MMM YYYY");
+                            }
+                            else
+                                return 'N/A'
                         }
-                        else
-                            return 'N/A'
+                        return data;
+
                     },
                     "width": "20%"
                 }
@@ -66,7 +70,8 @@ angular.module('niftybinzApp')
         $('#couponDetailsTable tbody').on('click', 'tr', function (ev) {
             $rootScope.popup_loading = true;
             var data = $scope.coupon_details_table.row( this ).data();
-            dialogService.popup(data,ev);
+            $(this).prop('disabled', true);
+            dialogService.popup(data,ev,this);
         });
 
     });

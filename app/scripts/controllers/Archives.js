@@ -2,7 +2,7 @@
  * Created by jidhun krishna on 6/10/17.
  */
 angular.module('niftybinzApp')
-    .controller('ArchiveCtrl', function ($scope, $filter,$rootScope,archiveLists,$http,
+    .controller('ArchiveCtrl', function ($scope,$state, $filter,$rootScope,archiveLists,$http,
                                          dataFetchService,dialogService,toastService) {
         //redirect to home page if there is no email to show
         if (archiveLists == ''){
@@ -77,8 +77,11 @@ angular.module('niftybinzApp')
                 },
                 { "data": "name" ,"width": "60%"},
                 { "data": "date" ,
-                    "render":function (data) {
-                        return moment(data, "x").format("DD MMM ");
+                    "render":function (data,type) {
+                        if ( type === 'display'){
+                            return moment(+data).format("DD MMM YYYY");
+                        }
+                        return data;
                     },
                     "width": "20%"
                 },
@@ -149,9 +152,10 @@ angular.module('niftybinzApp')
         // on row click of the table, display a popup contain the details of the mail
         $('#archivesTable tbody').on('click', 'tr', function (ev) {
             var data = archive_table.row( this ).data();
+            $(this).prop('disabled', true);
             if(data){
                 $rootScope.popup_loading = true;
             }
-            dialogService.popup(data,ev);
+            dialogService.popup(data,ev,this);
         } );
     });

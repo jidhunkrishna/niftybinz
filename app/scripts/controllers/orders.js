@@ -67,7 +67,10 @@ angular.module('niftybinzApp')
             }
             if (sortValue.sortName =='company'){
                 $scope.orderValue='fileType';
-            }else{
+            }else if(sortValue.sortName=='date'){
+                $scope.orderValue = 'display_date';
+            }
+            else{
                 $scope.orderValue=sortValue.sortName;
             }
         };
@@ -109,7 +112,7 @@ angular.module('niftybinzApp')
             if(data){
                 $rootScope.popup_loading = true;
             }
-            dialogService.popup(data,ev);
+            dialogService.popup(data,ev,data.id);
         }
 
     });

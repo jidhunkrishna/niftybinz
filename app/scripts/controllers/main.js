@@ -14,42 +14,45 @@ angular.module('niftybinzApp')
         function ($rootScope,$scope,$state,$http, loginService ,$window,postDataService) {
 
             $scope.invalidData = false;
+            $scope.user={name:'',password:''};
             //Log in check, when user logged in through nifty account.
             $scope.onLoginCheck = function () {
                 $scope.invalidData = false;
-                $scope.dataLoading = true;
-                $window.localStorage.setItem('niftyUserName',$scope.user.name);
-                var apiParams= {"username":$scope.user.name, "password": $scope.user.password};
-                $.ajax({
-                    url: "http://chiteacake.com/niftybinzlogin",
-                    type: "POST",
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    processData: false,
-                    data: JSON.stringify(apiParams),
-                    success: function (response) {
-                        console.log('Successfully logged in.');
-                        if (response.STATUS == "EXIST"){
-                            $scope.dataLoading = false;
-                            $state.go('dashboard');
-                        }
-                        else{
+                if ($scope.user.name && $scope.user.password){
+                    $scope.dataLoading = true;
+                    $window.localStorage.setItem('niftyUserName',$scope.user.name);
+                    var apiParams= {"username":$scope.user.name, "password": $scope.user.password};
+                    $.ajax({
+                        url: "http://chiteacake.com/niftybinzlogin",
+                        type: "POST",
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        processData: false,
+                        data: JSON.stringify(apiParams),
+                        success: function (response) {
+                            console.log('Successfully logged in.');
+                            if (response.STATUS == "EXIST"){
+                                $scope.dataLoading = false;
+                                $state.go('dashboard');
+                            }
+                            else{
+                                $scope.dataLoading = false;
+                                $scope.invalidData = true;
+                                $scope.$digest();
+                                console.log('Invalid status')
+                            }
+                        },
+                        error: function (response, textStatus, errorThrown) {
                             $scope.dataLoading = false;
                             $scope.invalidData = true;
                             $scope.$digest();
-                            console.log('Invalid status')
+                            console.log(response.MESSAGE);
                         }
-                    },
-                    error: function (response, textStatus, errorThrown) {
-                        $scope.dataLoading = false;
-                        $scope.invalidData = true;
-                        $scope.$digest();
-                        console.log(response.MESSAGE);
-                    }
-                });
+                    });
+                }
             };
 
             //Log in check, when user logged in through google account.
